@@ -9,7 +9,7 @@ import avatar from "../assets/avatar.png"
 import { useState } from "react";
 
 const navigation = [
-    { name: "Dasboard", href: "/dasboard" },
+    { name: "Dashboard", href: "/dashboard" },
     { name: "Orders", href: "/orders" },
     { name: "Cart page", href: "/cart" },
     { name: "Checkout page", href: "/checkout" }
@@ -19,7 +19,7 @@ const navigation = [
 export const Navbar = () => {
     const [isDropdownOpen, setIsDropdownOpen] = useState(false);
     console.log(isDropdownOpen)
-    const currentUser = true;
+    const currentUser = false;
 
 
     return (
