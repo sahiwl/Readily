@@ -14,58 +14,58 @@ import { BookCard } from '../books/BookCard';
 export const Recommended = () => {
     const [books, setBooks] = useState([]);
 
-    
 
-    useEffect(()=>{
-        fetch("books.json").then(res=>res.json()).then((data)=>setBooks(data))
+
+    useEffect(() => {
+        fetch("books.json").then(res => res.json()).then((data) => setBooks(data))
     }, []);
-  return (
-    <>
-    <div className="py-16">
+    return (
+        <>
+            <div className="py-16">
 
-        <h2 className='text-2xl font-semibold mb-6'>Recommended for you</h2>
-        <Swiper
-        slidesPerView={1}
-        spaceBetween={30}
-        navigation={true}
-        // pagination={{
-            //   clickable: true,
-            // }}
-            breakpoints={{
-                640: {
-                    slidesPerView: 1,
-                    spaceBetween: 20,
-                },
-                768: {
-                    slidesPerView: 2,
-                    spaceBetween: 40,
-                },
-                1024: {
-                    slidesPerView: 2,
-                    spaceBetween: 50,
-                },
-                1180:{
-                    slidesPerView: 3,
-                    spaceBetween: 50,
-                }
-            }}
-            modules={[Pagination, Navigation]}
-            className="mySwiper"
-            >
+                <h2 className='text-2xl font-semibold mb-6'>Recommended for you</h2>
+                <Swiper
+                    slidesPerView={1}
+                    spaceBetween={30}
+                    navigation={true}
+                    // pagination={{
+                    //   clickable: true,
+                    // }}
+                    breakpoints={{
+                        640: {
+                            slidesPerView: 1,
+                            spaceBetween: 20,
+                        },
+                        768: {
+                            slidesPerView: 2,
+                            spaceBetween: 40,
+                        },
+                        1024: {
+                            slidesPerView: 2,
+                            spaceBetween: 50,
+                        },
+                        1180: {
+                            slidesPerView: 3,
+                            spaceBetween: 50,
+                        }
+                    }}
+                    modules={[Pagination, Navigation]}
+                    className="mySwiper"
+                >
 
-{   books.length>0 && books.slice(8,18).map((book,index)=>(
-    <div className="">
-                         <SwiperSlide key={index}>
-                            <BookCard book={book}/>
+                    {books.length > 0 && books.slice(8, 18).map((book, index) => (
+
+                            <SwiperSlide key={index}>
+                                <BookCard book={book} />
                             </SwiperSlide>
-                </div>
-                ))
-            }
 
-       
-       
-      </Swiper>
+                    ))
+                    }
+
+
+
+                </Swiper>
             </div>
-    </>
-  )
+        </>
+    )
 }

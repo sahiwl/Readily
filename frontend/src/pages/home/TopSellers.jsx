@@ -73,11 +73,11 @@ export const TopSellers = () => {
       >
 
 {   filteredBooks.length>0 && filteredBooks.map((book,index)=>(
-                    <div className="">
+                    // <div className="">
                          <SwiperSlide key={index}>
                             <BookCard book={book}/>
                             </SwiperSlide>
-                </div>
+                // </div>
                 ))
             }
 
