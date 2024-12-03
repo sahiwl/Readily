@@ -4,7 +4,7 @@ import { TopSellers } from './TopSellers'
 import { Recommended } from './Recommended'
 import { News } from './News'
 
-export const Home = () => {
+const Home = () => {
   return (
     <div>
         <Banner/>
@@ -14,3 +14,4 @@ export const Home = () => {
     </div>
   )
 }
+export default Home;
