@@ -58,6 +58,7 @@ export const AuthProvide = ({children})=>{
             currentUser,
             registerUser,
             loginUser,
+            loading,
             signInWithGoogle,
             logout
     }
