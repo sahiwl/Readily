@@ -19,9 +19,9 @@ router.get("/",getAllBooks)
 router.get('/:id', getSingleBook)
 
 //update a book endpoint
-router.put('/edit/:id', updateBook)
+router.put('/edit/:id', verifyAdminToken, updateBook)
 
-router.delete('/:id', deleteABook)
+router.delete('/:id', verifyAdminToken, deleteABook)
 
 
 
