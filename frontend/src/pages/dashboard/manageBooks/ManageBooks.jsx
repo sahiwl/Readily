@@ -2,7 +2,7 @@ import React from 'react'
 import { useDeleteBookMutation, useFetchAllBooksQuery } from '../../../redux/features/books/booksApi';
 import { Link, useNavigate } from 'react-router-dom';
 
-export const ManageBooks = () => {
+ export const ManageBooks = () => {
     const navigate = useNavigate();
 
     const {data: books, refetch} = useFetchAllBooksQuery()
