@@ -9,7 +9,7 @@ const cors= require("cors")
 //middlewares
 app.use(express.json())
 app.use(cors({
-    origin: ['http://localhost:5173'],
+    origin: ['http://localhost:5173', 'https://sahiwl-bookstore-fe.vercel.app/'],
     credentials: true
 }))
 
