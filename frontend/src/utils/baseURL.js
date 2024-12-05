@@ -1,3 +1,5 @@
 export const getBaseUrl= ()=>{
-    return import.meta.env.BE_URL 
+    const api = import.meta.env.VITE_BE_URL;
+    return api;
+    
 }
