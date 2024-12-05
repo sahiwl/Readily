@@ -9,7 +9,9 @@ const cors= require("cors")
 //middlewares
 app.use(express.json())
 app.use(cors({
-    origin: ['http://localhost:5173', 'https://sahiwl-bookstore-fe.vercel.app'],
+    origin: [process.env.FE_URL1,
+      process.env.FE_URL2, process.env.FE_URL3, process.env.FE_MAIN_URL
+    ],
     credentials: true
 }))
 

@@ -39,7 +39,10 @@ export const Navbar = () => {
                     <Link to="/">
                         <HiMiniBars3CenterLeft className="size-6" />
                     </Link>
-
+                    <h1 className="font-Cinzel text-4xl text-gray-600">
+                        <Link to="/">Readily</Link>
+                        
+                        </h1>
                     {/* {search input} */}
                     <div className="relative sm:w-72 w-40 space-x-2">
                         <IoSearchOutline className="absolute inline-block left-3 inset-y-2" />

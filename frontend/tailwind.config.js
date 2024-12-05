@@ -12,6 +12,7 @@ export default {
       fontFamily: {
         primary: ["Montserrat", "sans-serif"],
         secondary: ["Nunito Sans", "sans-serif"],
+        Cinzel: ["Cinzel", "sans-serif"]
       },
     },
   },
