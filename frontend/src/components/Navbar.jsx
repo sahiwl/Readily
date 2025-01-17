@@ -32,14 +32,11 @@ export const Navbar = () => {
 
     // const currentUser = false;
     return (
-        <header className="max-w-screen-2xl mx-auto px-4 py-6">
-            <nav className="flex justify-between items-center">
+        <header className="max-w-screen-2xl mx-auto px-4 py-6 sticky top-0 bg-white">
+            <nav className="flex justify-between sticky items-center">
                 {/* {left side} */}
                 <div className="flex items-center md:gap-16 gap-4">
-                    <Link to="/">
-                        <HiMiniBars3CenterLeft className="size-6" />
-                    </Link>
-                    <h1 className="font-Cinzel text-4xl text-gray-600">
+                    <h1 className="font-Cinzel text-4xl  text-gray-600">
                         <Link to="/">Readily</Link>
                         
                         </h1>
