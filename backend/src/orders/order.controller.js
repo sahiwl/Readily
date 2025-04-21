@@ -1,6 +1,6 @@
-const Order = require("./order.model")
+import Order from "./order.model.js";
 
-const createAOrder = async (req,res)=>{
+const createAOrder = async (req,res) => {
 try {
     const newOrder = await Order(req.body);
     const savedOrder = await newOrder.save();
@@ -11,7 +11,7 @@ try {
 }
 }
 
-const getOrderByEmail = async (req,res)=>{
+const getOrderByEmail = async (req,res) => {
     try {
         const {email} = req.params;
         const orders = await Order.find({email}).sort({createdAt: -1});
@@ -23,8 +23,9 @@ const getOrderByEmail = async (req,res)=>{
         console.log("Error fetching order: ", error)
         res.status(500).json({message: "Failed to fetch the order"})    
     }
-    }
-module.exports = {
+}
+
+export {
     createAOrder,
     getOrderByEmail
 }

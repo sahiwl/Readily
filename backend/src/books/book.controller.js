@@ -1,4 +1,4 @@
-const Book = require("./book.model");
+import Book from "./book.model.js";
 
 const postABook = async (req, res) => {
     try {
@@ -74,7 +74,7 @@ const deleteABook = async (req, res) => {
     }
 };
 
-module.exports = {
+export {
     postABook,
     getAllBooks,
     getSingleBook,

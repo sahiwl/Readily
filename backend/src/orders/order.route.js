@@ -1,12 +1,12 @@
-const express = require('express');
-const { createAOrder, getOrderByEmail } = require('./order.controller');
+import express from 'express';
+import { createAOrder, getOrderByEmail } from './order.controller.js';
 
 const router = express.Router();
 
 //create order endpoint
-router.post('/', createAOrder)
+router.post('/', createAOrder);
 
 //get orders by user email
-router.get("/email/:email", getOrderByEmail)
+router.get("/email/:email", getOrderByEmail);
 
-module.exports = router;
+export default router;

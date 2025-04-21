@@ -1,11 +1,12 @@
-const express = require('express');
-const User = require('./user.model');
-const jwt = require('jsonwebtoken');
+import express from 'express';
+import User from './user.model.js';
+import jwt from 'jsonwebtoken';
+
 const router = express.Router();
 
-const JWT_SECRET = process.env.JWT_SECRET_KEY
+const JWT_SECRET = process.env.JWT_SECRET_KEY;
 
-router.post('/admin', async(req,res)=>{
+router.post('/admin', async(req,res) => {
     const {username, password} = req.body;
     try {
         const admin = await User.findOne({username})
@@ -29,6 +30,6 @@ router.post('/admin', async(req,res)=>{
         console.log("Failed to login as admin: ", error);
         res.status(401).send({message: "Failed to login"})
     }
-})
+});
 
-module.exports = router;
+export default router;

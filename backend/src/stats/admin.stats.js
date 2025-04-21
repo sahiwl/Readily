@@ -1,9 +1,9 @@
-const mongoose = require('mongoose');
-const express = require('express');
-const Order = require('../orders/order.model');
-const Book = require('../books/book.model');
-const router = express.Router();
+import mongoose from 'mongoose';
+import express from 'express';
+import Order from '../orders/order.model.js';
+import Book from '../books/book.model.js';
 
+const router = express.Router();
 
 // Function to calculate admin stats
 router.get("/", async (req, res) => {
@@ -46,16 +46,18 @@ router.get("/", async (req, res) => {
         ]);
 
         // Result summary
-        res.status(200).json({  totalOrders,
+        res.status(200).json({  
+            totalOrders,
             totalSales: totalSales[0]?.totalSales || 0,
             trendingBooks,
             totalBooks,
-            monthlySales, });
+            monthlySales 
+        });
       
     } catch (error) {
         console.error("Error fetching admin stats:", error);
         res.status(500).json({ message: "Failed to fetch admin stats" });
     }
-})
+});
 
-module.exports = router;
+export default router;
