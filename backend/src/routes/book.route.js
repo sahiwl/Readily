@@ -1,6 +1,6 @@
 import express from 'express';
-import Book from './book.model.js';
-import { postABook, getAllBooks, getSingleBook, updateBook, deleteABook } from './book.controller.js';
+import Book from '../models/book.model.js';
+import { postABook, getAllBooks, getSingleBook, updateBook, deleteABook } from '../controllers/book.controller.js';
 import verifyAdminToken from '../middleware/verifyAdminToken.js';
 
 const router = express.Router();

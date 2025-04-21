@@ -1,5 +1,5 @@
 import mongoose from 'mongoose';
-import bcrypt from 'bcrypt';
+import { hashPassword } from '../middleware/passwordUtils.js';
 
 const userSchema = new mongoose.Schema({
     username:{
@@ -15,13 +15,26 @@ const userSchema = new mongoose.Schema({
         type: String,
         enum: ['user', 'admin'],
         required: true
-    }
+    },
+    createdAt:{
+        type: Date,
+        default: Date.now  
+    },
+      updatedAt: {
+        type: Date,
+        default: Date.now
+      }
 });
 
 userSchema.pre('save', async function (next){
     if(!this.isModified('password')) return next();
-    this.password = await bcrypt.hash(this.password, 10);
-    next();
+    
+    try {
+        this.password = await hashPassword(this.password);
+        next();
+    } catch (error) {
+        next(error);
+    }
 });
 
 const User = mongoose.model('User', userSchema);
