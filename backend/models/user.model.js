@@ -1,5 +1,5 @@
 import mongoose from 'mongoose';
-import { hashPassword } from '../middleware/passwordUtils.js';
+import { hashPassword } from '../src/middleware/passwordUtils.js';
 
 const userSchema = new mongoose.Schema({
     username:{

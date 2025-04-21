@@ -2,10 +2,11 @@ import express from 'express';
 import dotenv from 'dotenv';
 import mongoose from 'mongoose';
 import cors from 'cors';
+import cookieParser from 'cookie-parser';
 
-import bookRoutes from './src/books/book.route.js';
-import orderRoutes from './src/orders/order.route.js';
-import userRoutes from './src/users/user.route.js';
+import bookRoutes from './routes/book.route.js';
+import orderRoutes from './routes/order.route.js';
+import userRoutes from './routes/user.route.js';
 import adminRoutes from './src/stats/admin.stats.js';
 
 dotenv.config();
@@ -14,6 +15,7 @@ const port = process.env.PORT || 3000;
 
 //middlewares
 app.use(express.json());
+app.use(cookieParser());
 app.use(cors({
       origin: [process.env.FE_URL1,
       process.env.FE_URL2, process.env.FE_URL3, process.env.FE_MAIN_URL

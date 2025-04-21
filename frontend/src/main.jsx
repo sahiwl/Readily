@@ -7,7 +7,11 @@ import router from './routers/router.jsx'
 import store from './redux/store.js'
 import { Provider } from 'react-redux'
 import 'sweetalert2/dist/sweetalert2.js'
+import { checkAuth } from './redux/features/auth/authStore.js'
 
+// Check authentication status on app startup
+// This will verify the HTTP-only cookie with the backend
+store.dispatch(checkAuth());
 
 createRoot(document.getElementById('root')).render(
   <Provider store={store}>

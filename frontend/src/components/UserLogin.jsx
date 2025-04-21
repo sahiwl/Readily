@@ -2,23 +2,30 @@ import React, { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { FaGoogle } from "react-icons/fa";
 import {useForm} from 'react-hook-form';
-import { useAuth } from '../context/AuthContext';
-import axios from "axios";
-import { getBaseUrl } from '../utils/baseURL';
+import { useAuthStore } from '../redux/features/auth/useAuthStore';
 
 export const UserLogin = () => {
-    const[message, setMessage] = useState("");
-    const {loginUser, signInWithGoogle} = useAuth()
+    const [message, setMessage] = useState("");
+    const [loading, setLoading] = useState(false);
+    const { 
+        loginWithFirebase, 
+        loginWithBackend, 
+        loginWithGoogle 
+    } = useAuthStore();
     const { register, handleSubmit, formState: { errors } } = useForm();
     const navigate = useNavigate();
     
     // Regular Firebase login
     const onSubmitFirebase = async (data) => {
+        setLoading(true);
         try {
-            await loginUser(data.email, data.password);
+            const result = await loginWithFirebase(data.email, data.password);
+            console.log("Firebase login successful:", result);
+            setLoading(false);
             alert("Login successful!");
             navigate("/")
         } catch (error) {
+            setLoading(false);
             setMessage("Please provide a valid email and password.")
             console.log("Error faced: ", error)  
         }
@@ -26,26 +33,15 @@ export const UserLogin = () => {
 
     // Backend API login
     const onSubmitBackend = async (data) => {
+        setLoading(true);
         try {
-            const response = await axios.post(`${getBaseUrl()}/api/auth/user`, data, {
-                headers: {
-                    'Content-type': 'application/json',
-                }
-            });
-            const auth = response.data;
-            
-            if(auth.token){
-                localStorage.setItem('token', auth.token);
-                setTimeout(()=>{
-                    localStorage.removeItem('token')
-                    alert('Token has expired, please login again!')
-                    navigate("/")
-                }, 3600*1000)
-            }
-
+            const result = await loginWithBackend(data);
+            console.log("Backend login successful:", result);
+            setLoading(false);
             alert("Login Successful!");
             navigate("/");
         } catch (error) {
+            setLoading(false);
             setMessage("Please provide a valid username and password.")
             console.log("Error faced: ", error)  
         }
@@ -61,12 +57,16 @@ export const UserLogin = () => {
         }
     };
 
-    const handleGoogleSignin = async()=>{
+    const handleGoogleSignin = async () => {
+        setLoading(true);
         try {
-            await signInWithGoogle();
+            const result = await loginWithGoogle();
+            console.log("Google sign in successful:", result);
+            setLoading(false);
             alert("Login successful!")
             navigate("/")
         } catch (error) {
+            setLoading(false);
             alert("Google signin failed.")
             console.log("Error during google signin: ", error)  
         }
@@ -107,7 +107,11 @@ export const UserLogin = () => {
                     }
 
                     <div className="">
-                        <button className='bg-blue-500 hover:bg-blue-700 font-bold text-white px-8 py-2 rounded focus:outline-none'>Login</button>
+                        <button 
+                            disabled={loading}
+                            className={`bg-blue-500 hover:bg-blue-700 font-bold text-white px-8 py-2 rounded focus:outline-none ${loading ? 'opacity-50 cursor-not-allowed' : ''}`}>
+                            {loading ? 'Logging in...' : 'Login'}
+                        </button>
                     </div>
                 </form>
                 
@@ -119,9 +123,10 @@ export const UserLogin = () => {
                 <div className="mt-4">
                     <button 
                         onClick={handleGoogleSignin}
-                        className='w-full flex flex-wrap gap-1 items-center justify-center bg-secondary hover:bg-blue-700 text-white font-bold py-2 px-4 rounded outline-none'>
+                        disabled={loading}
+                        className={`w-full flex flex-wrap gap-1 items-center justify-center bg-secondary hover:bg-blue-700 text-white font-bold py-2 px-4 rounded outline-none ${loading ? 'opacity-50 cursor-not-allowed' : ''}`}>
                         <FaGoogle/>
-                        Sign in with Google
+                        {loading ? 'Signing in...' : 'Sign in with Google'}
                     </button>
                 </div>
                 <p className='mt-5 text-center text-gray-500 text-xs'>&copy;2024 Book Store. All rights reserved</p>

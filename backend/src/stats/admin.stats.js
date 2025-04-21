@@ -1,7 +1,7 @@
 import mongoose from 'mongoose';
 import express from 'express';
-import Order from '../orders/order.model.js';
-import Book from '../books/book.model.js';
+import Order from '../../models/order.model.js';
+import Book from '../../models/book.model.js';
 
 const router = express.Router();
 
