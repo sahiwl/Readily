@@ -9,7 +9,7 @@ import 'swiper/css/navigation';
 
 // import required modules
 import { Navigation, Pagination } from 'swiper/modules';
-import { BookCard } from '../books/BookCard';
+import { BookCard } from '../books/BookCard.jsx';
 import { fetchRecommendedBooks } from '../../redux/features/googleBooks/googleBooksSlice.js';
 
 export const Recommended = () => {
@@ -33,7 +33,7 @@ export const Recommended = () => {
     // Fetch recommended books on component mount
     useEffect(() => {
         const recentlyViewed = getRecentlyViewed();
-        // Changed from 10 to 25 to show more books in the slider
+
         dispatch(fetchRecommendedBooks({ recentlyViewed, maxResults: 25 }));
     }, [dispatch]);
 

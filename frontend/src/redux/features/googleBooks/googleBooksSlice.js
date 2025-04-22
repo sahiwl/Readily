@@ -10,7 +10,7 @@ export const fetchTrendingBooks = createAsyncThunk(
   'googleBooks/fetchTrending',
   async (maxResults = 12, { rejectWithValue }) => {
     try {
-      const response = await axios.get(`${API_URL}/books/google-books/trending?maxResults=${maxResults}`);
+      const response = await axios.get(`${API_URL}/api/books/google-books/trending?maxResults=${maxResults}`);
       return response.data.books;
     } catch (error) {
       return rejectWithValue(error.response?.data?.error || 'Failed to fetch trending books');
@@ -23,7 +23,7 @@ export const fetchBooksByCategory = createAsyncThunk(
   async ({ category, maxResults = 12 }, { rejectWithValue }) => {
     try {
       const response = await axios.get(
-        `${API_URL}/books/google-books/category/${category.toLowerCase()}?maxResults=${maxResults}`
+        `${API_URL}/api/books/google-books/category/${category.toLowerCase()}?maxResults=${maxResults}`
       );
       return response.data.books;
     } catch (error) {
@@ -36,7 +36,7 @@ export const fetchBookById = createAsyncThunk(
   'googleBooks/fetchById',
   async (id, { rejectWithValue }) => {
     try {
-      const response = await axios.get(`${API_URL}/books/google-books/${id}`);
+      const response = await axios.get(`${API_URL}/api/books/google-books/${id}`);
       return response.data.book;
     } catch (error) {
       return rejectWithValue(error.response?.data?.error || 'Failed to fetch book details');
@@ -48,7 +48,7 @@ export const fetchSimilarBooks = createAsyncThunk(
   'googleBooks/fetchSimilar',
   async ({ id, maxResults = 6 }, { rejectWithValue }) => {
     try {
-      const response = await axios.get(`${API_URL}/books/google-books/similar/${id}?maxResults=${maxResults}`);
+      const response = await axios.get(`${API_URL}/api/books/google-books/similar/${id}?maxResults=${maxResults}`);
       return response.data.books;
     } catch (error) {
       return rejectWithValue(error.response?.data?.error || 'Failed to fetch similar books');
@@ -60,7 +60,7 @@ export const fetchNewReleases = createAsyncThunk(
   'googleBooks/fetchNewReleases',
   async (maxResults = 12, { rejectWithValue }) => {
     try {
-      const response = await axios.get(`${API_URL}/books/google-books/new-releases?maxResults=${maxResults}`);
+      const response = await axios.get(`${API_URL}/api/books/google-books/new-releases?maxResults=${maxResults}`);
       return response.data.books;
     } catch (error) {
       return rejectWithValue(error.response?.data?.error || 'Failed to fetch new releases');
@@ -72,7 +72,7 @@ export const searchBooks = createAsyncThunk(
   'googleBooks/search',
   async ({ query, maxResults = 20 }, { rejectWithValue }) => {
     try {
-      const response = await axios.get(`${API_URL}/books/google-books?q=${query}&maxResults=${maxResults}`);
+      const response = await axios.get(`${API_URL}/api/books/google-books?q=${query}&maxResults=${maxResults}`);
       return response.data.books;
     } catch (error) {
       return rejectWithValue(error.response?.data?.error || 'Failed to search books');
@@ -100,7 +100,7 @@ export const fetchRecommendedBooks = createAsyncThunk(
       
       // Make the API request
       const response = await axios.get(
-        `${API_URL}/books/google-books/recommended?preferences=${prefsParam}&recentlyViewed=${recentParam}&maxResults=${maxResults}`
+        `${API_URL}/api/books/google-books/recommended?preferences=${prefsParam}&recentlyViewed=${recentParam}&maxResults=${maxResults}`
       );
       
       // Log success
