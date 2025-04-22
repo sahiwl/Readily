@@ -12,15 +12,15 @@ export const CheckoutPage = () => {
     
     // Fixed price calculation to use price from cartItems or defaultPrice
     const calculateItemPrice = (item) => {
-        // Try to get price from various possible sources and formats
-        if (typeof item.price === 'number') {
+
+        if (typeof item.newPrice === 'number') {
+            return item.newPrice;
+        } else if (typeof item.newPrice === 'string' && !isNaN(parseFloat(item.newPrice))) {
+            return parseFloat(item.newPrice);
+        } else if (typeof item.price === 'number') {
             return item.price;
         } else if (typeof item.price === 'string' && !isNaN(parseFloat(item.price))) {
             return parseFloat(item.price);
-        } else if (typeof item.mrp === 'number') {
-            return item.mrp;
-        } else if (typeof item.mrp === 'string' && !isNaN(parseFloat(item.mrp))) {
-            return parseFloat(item.mrp);
         }
         // Default price if none found
         return 19.99; // Set a reasonable default price
@@ -38,13 +38,23 @@ export const CheckoutPage = () => {
     };
     
     const totalPrice = calculateTotalPrice();
-    const productIds = cartItems.map(item => item._id);
+    
+    // Create an array of book objects with necessary details instead of just IDs
+    const orderItems = cartItems.map(item => ({
+        _id: item._id,
+        title: item.title,
+        price: calculateItemPrice(item),
+        quantity: parseInt(item.quantity) || 1,
+        author: item.author || (item.authors ? item.authors[0] : 'Unknown'),
+        coverImage: item.coverImage || item.image
+    }));
     
     // Debug log - remove in production
     useEffect(() => {
         console.log("Cart items with prices:", cartItems.map(item => ({
             title: item.title,
             price: item.price,
+            newPrice: item.newPrice,
             calculated: calculateItemPrice(item)
         })));
         console.log("Total price:", totalPrice);
@@ -78,12 +88,13 @@ export const CheckoutPage = () => {
         }
         
         try {
+            // Send the complete book objects instead of just IDs
             const order = {
                 name,
                 email,
                 phone: phoneNumber,
                 address,
-                productIds,
+                items: orderItems, // Send complete item details
                 totalPrice: parseFloat(totalPrice)
             }
             

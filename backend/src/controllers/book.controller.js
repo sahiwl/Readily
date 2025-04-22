@@ -80,7 +80,7 @@ const deleteABook = async (req, res) => {
 const getGoogleBooks = async (req, res) => {
     try {
         const query = req.query.q || 'bestseller';
-        const maxResults = parseInt(req.query.maxResults) || 10;
+        const maxResults = parseInt(req.query.maxResults) || 25;
         const startIndex = parseInt(req.query.startIndex) || 0;
         const orderBy = req.query.orderBy || 'relevance';
         const category = req.query.category || '';
@@ -116,7 +116,7 @@ const getBookById = async (req, res) => {
 
 const getTrendingBooks = async (req, res) => {
     try {
-        const maxResults = parseInt(req.query.maxResults) || 10;
+        const maxResults = parseInt(req.query.maxResults) || 25;
         const response = await googleBooksService.getTrendingBooks(maxResults);
         const books = googleBooksService.adaptGoogleBooksData(response);
         
@@ -130,7 +130,7 @@ const getTrendingBooks = async (req, res) => {
 
 const getNewReleases = async (req, res) => {
     try {
-        const maxResults = parseInt(req.query.maxResults) || 10;
+        const maxResults = parseInt(req.query.maxResults) || 25;
         const response = await googleBooksService.getNewReleases(maxResults);
         const books = googleBooksService.adaptGoogleBooksData(response);
         
@@ -145,7 +145,7 @@ const getNewReleases = async (req, res) => {
 const getBooksByAuthor = async (req, res) => {
     try {
         const { author } = req.params;
-        const maxResults = parseInt(req.query.maxResults) || 10;
+        const maxResults = parseInt(req.query.maxResults) || 25;
         const response = await googleBooksService.getBooksByAuthor(author, maxResults);
         const books = googleBooksService.adaptGoogleBooksData(response);
         
@@ -159,7 +159,7 @@ const getBooksByAuthor = async (req, res) => {
 const getBooksByCategory = async (req, res) => {
     try {
         const { category } = req.params;
-        const maxResults = parseInt(req.query.maxResults) || 10;
+        const maxResults = parseInt(req.query.maxResults) || 25;
         const response = await googleBooksService.getBooksByCategory(category, maxResults);
         const books = googleBooksService.adaptGoogleBooksData(response);
         
@@ -172,9 +172,14 @@ const getBooksByCategory = async (req, res) => {
 
 const getRecommendedBooks = async (req, res) => {
     try {
-        const preferences = req.query.preferences ? req.query.preferences.split(',') : [];
-        const recentlyViewed = req.query.recentlyViewed ? req.query.recentlyViewed.split(',') : [];
-        const maxResults = parseInt(req.query.maxResults) || 10;
+        // handles default preferences by passing empty arrays
+        // if no preferences are specified in the request
+        const preferences = req.query.preferences ? req.query.preferences.split(',').filter(p => p) : [];
+        const recentlyViewed = req.query.recentlyViewed ? req.query.recentlyViewed.split(',').filter(id => id) : [];
+        const maxResults = parseInt(req.query.maxResults) || 25;
+        
+        console.log('Controller received preferences:', preferences);
+        console.log('Controller received recentlyViewed:', recentlyViewed);
         
         const response = await googleBooksService.getRecommendedBooks(preferences, recentlyViewed, maxResults);
         const books = googleBooksService.adaptGoogleBooksData(response);
@@ -189,7 +194,7 @@ const getRecommendedBooks = async (req, res) => {
 const getSimilarBooks = async (req, res) => {
     try {
         const { id } = req.params;
-        const maxResults = parseInt(req.query.maxResults) || 6;
+        const maxResults = parseInt(req.query.maxResults) || 15;
         
         // First get the book details
         const bookData = await googleBooksService.getBookById(id);
@@ -202,38 +207,6 @@ const getSimilarBooks = async (req, res) => {
     } catch (error) {
         console.error('Error fetching similar books:', error.message);
         res.status(500).json({ error: 'Failed to fetch similar books' });
-    }
-};
-
-const advancedSearch = async (req, res) => {
-    try {
-        const {
-            title,
-            author,
-            publisher,
-            subject,
-            isbn,
-            maxResults = 10,
-            startIndex = 0,
-            orderBy = 'relevance'
-        } = req.query;
-        
-        const response = await googleBooksService.advancedSearch({
-            title,
-            author,
-            publisher,
-            subject,
-            isbn,
-            maxResults: parseInt(maxResults),
-            startIndex: parseInt(startIndex),
-            orderBy
-        });
-        
-        const books = googleBooksService.adaptGoogleBooksData(response);
-        res.status(200).json({ books });
-    } catch (error) {
-        console.error('Error performing advanced search:', error.message);
-        res.status(500).json({ error: 'Failed to perform advanced search' });
     }
 };
 
@@ -250,6 +223,5 @@ export {
     getBooksByAuthor,
     getBooksByCategory,
     getRecommendedBooks,
-    getSimilarBooks,
-    advancedSearch
+    getSimilarBooks
 }

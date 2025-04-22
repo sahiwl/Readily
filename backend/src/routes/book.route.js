@@ -13,8 +13,7 @@ import {
   getBooksByAuthor,
   getBooksByCategory,
   getRecommendedBooks,
-  getSimilarBooks,
-  advancedSearch
+  getSimilarBooks
 } from '../controllers/book.controller.js';
 import verifyAdminToken from '../middleware/verifyAdminToken.js';
 
@@ -39,7 +38,6 @@ router.get('/google-books/author/:author', getBooksByAuthor);
 router.get('/google-books/category/:category', getBooksByCategory);
 router.get('/google-books/recommended', getRecommendedBooks);
 router.get('/google-books/similar/:id', getSimilarBooks);
-router.get('/google-books/search/advanced', advancedSearch);
 router.get('/google-books/:id', getBookById);
 
 //update a book endpoint

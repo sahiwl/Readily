@@ -22,13 +22,15 @@ const orderSchema = new mongoose.Schema({
         type: Number,
         required: true
     },
-    productIds: [
-        {
-            type: mongoose.Schema.Types.ObjectId,
-            ref: 'Book',
-            required: true
-        }
-    ],
+    // supports both ObjectId references and custom objects for google books
+    productIds: {
+        type: [mongoose.Schema.Types.Mixed],
+        required: true
+    },
+    // stores complete item details for display purposes
+    itemDetails: {
+        type: Array
+    },
     totalPrice: {
         type:Number,
         required: true

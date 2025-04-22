@@ -261,13 +261,18 @@ const googleBooksService = {
    * @param {Array} recentlyViewed - Recently viewed book IDs
    * @param {number} maxResults - Maximum number of results
    */
-  getRecommendedBooks: async (preferences = [], recentlyViewed = [], maxResults = 10) => {
+  getRecommendedBooks: async (preferences = [], recentlyViewed = [], maxResults = 25) => {
     try {
-      // If we have user preferences, use them for recommendations
-      if (preferences && preferences.length > 0) {
+      if (!preferences || preferences.length === 0) {
+        preferences = ['horror', 'romance'];
+        console.log('default preferences:', preferences);
+      }
+
+      if (preferences.length > 0) {
         // Get a random preference to ensure variety
         const randomIndex = Math.floor(Math.random() * preferences.length);
         const category = preferences[randomIndex];
+        console.log('Selected category for recommendations:', category);
         
         return await googleBooksService.getBooksByCategory(category, maxResults);
       }
@@ -291,7 +296,7 @@ const googleBooksService = {
         }
       }
       
-      // Default to trending books if no preferences or recently viewed books
+      // Default to trending books as a last resort
       return await googleBooksService.getTrendingBooks(maxResults);
     } catch (error) {
       console.error('Error fetching recommended books:', error);
