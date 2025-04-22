@@ -7,7 +7,6 @@ import cookieParser from 'cookie-parser';
 import bookRoutes from './src/routes/book.route.js'
 import orderRoutes from './src/routes/order.route.js';
 import userRoutes from './src/routes/user.route.js';
-import adminRoutes from './src/stats/admin.stats.js';
 
 dotenv.config();
 const app = express();
@@ -27,7 +26,6 @@ app.use(cors({
 app.use("/api/books", bookRoutes);
 app.use("/api/orders", orderRoutes);
 app.use("/api/auth", userRoutes);
-app.use("/api/admin", adminRoutes);
 
 
 app.get('/', (req, res) => {

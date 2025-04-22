@@ -11,3 +11,9 @@
 - cart and checkout pages to ensure accurate price calculations
 - feat: searchbar finally working
 
+## 23 April 2025
+- refactor: removed all local books logic from frontend and backend
+- feat: application now relies exclusively on Google Books API
+- update: deprecated admin book management features
+- update: removed MongoDB Book model dependencies
+

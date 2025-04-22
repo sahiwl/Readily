@@ -189,33 +189,6 @@ export const useAuthStore = () => {
     }
   };
 
-  const adminLoginWithBackend = async (userData) => {
-    try {
-      // withCredentials: true ensures cookies are sent with the request
-      const response = await axios.post(`${getBaseUrl()}/api/auth/admin`, userData, {
-        headers: { 'Content-type': 'application/json' },
-        withCredentials: true
-      });
-      
-      const { user } = response.data;
-      
-      // Save auth info to Redux store (only user data, token is in HTTP-only cookie)
-      dispatch(setAuthInfo({ 
-        user: { ...user, provider: 'backend', role: 'admin' }
-      }));
-      
-      // Load user's cart (even admins might have carts)
-      dispatch(loadUserCart());
-      
-      console.log("Admin login successful");
-      
-      return response.data;
-    } catch (error) {
-      console.error('Admin login error:', error);
-      throw error;
-    }
-  };
-
   // Logout from both Firebase and our backend
   const logoutUser = async () => {
     try {
@@ -245,7 +218,6 @@ export const useAuthStore = () => {
     loginWithFirebase,
     loginWithGoogle,
     loginWithBackend,
-    adminLoginWithBackend,
     logoutUser,
     setUser: (user) => dispatch(setUser(user))
   };

@@ -11,7 +11,7 @@ import { useAuthStore } from "../redux/features/auth/useAuthStore";
 import { useBookSearch } from "../utils/searchUtils";
 
 const navigation = [
-    { name: "Dashboard", href: "/dashboard" },
+    // { name: "Dashboard", href: "/dashboard" },
     { name: "Orders", href: "/orders" },
     { name: "Cart page", href: "/cart" },
     { name: "Checkout page", href: "/checkout" }

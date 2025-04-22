@@ -13,17 +13,18 @@ const userSchema = new mongoose.Schema({
     },
     role:{
         type: String,
-        enum: ['user', 'admin'],
+        enum: ['user'], 
+        default: 'user',
         required: true
     },
     createdAt:{
         type: Date,
         default: Date.now  
     },
-      updatedAt: {
+    updatedAt: {
         type: Date,
         default: Date.now
-      }
+    }
 });
 
 userSchema.pre('save', async function (next){

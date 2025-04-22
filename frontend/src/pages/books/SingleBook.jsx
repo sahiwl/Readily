@@ -1,5 +1,4 @@
 import React, { useEffect } from 'react'
-import { useFetchBookByIdQuery } from '../../redux/features/books/booksApi';
 import { useDispatch, useSelector } from 'react-redux';
 import { FiShoppingCart } from 'react-icons/fi';
 import { useParams, Link } from 'react-router-dom';
@@ -10,41 +9,26 @@ export const SingleBook = () => {
     const { id } = useParams();
     const dispatch = useDispatch();
     
-
     const { 
-        currentBook: googleBook, 
+        currentBook: book, 
         similarBooks, 
-        loading: googleLoading, 
-        error: googleError 
+        loading, 
+        error 
     } = useSelector((state) => state.googleBooks);
-    
-    // check if it's a google books api id (not a MongoDB ObjectId)
-    const isGoogleBookId = id && (id.length !== 24 || id.includes('-'));
-
-    // use the regular MongoDB query for local books
-    const { data: localBook, isLoading: isLocalLoading, isError: isLocalError } = 
-        !isGoogleBookId ? useFetchBookByIdQuery(id) : { data: null, isLoading: false, isError: false };
 
     useEffect(() => {
-        if (isGoogleBookId) {
-            dispatch(fetchBookById(id));
-            dispatch(fetchSimilarBooks({ id, maxResults: 6 }));
-        }
+        dispatch(fetchBookById(id));
+        dispatch(fetchSimilarBooks({ id, maxResults: 6 }));
         
         // Clean up on unmount
         return () => {
             dispatch(clearCurrentBook());
         };
-    }, [id, isGoogleBookId, dispatch]);
+    }, [id, dispatch]);
 
     const handleAddToCart = (product) => {
         dispatch(addToCart(product));
     };
-    
-
-    const book = isGoogleBookId ? googleBook : localBook;
-    const loading = isGoogleBookId ? googleLoading : isLocalLoading;
-    const error = isGoogleBookId ? googleError : isLocalError;
 
     if (loading) {
         return (
@@ -147,7 +131,7 @@ export const SingleBook = () => {
                 <p className="text-gray-700 leading-relaxed">{book.description}</p>
             </div>
 
-            {isGoogleBookId && similarBooks && similarBooks.length > 0 && (
+            {similarBooks && similarBooks.length > 0 && (
                 <div className="mt-12">
                     <h2 className="text-2xl font-bold mb-6">Similar Books You May Like</h2>
                     <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">

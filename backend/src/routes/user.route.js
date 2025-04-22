@@ -1,10 +1,7 @@
 import express from 'express';
-import { adminLogin, userLogin, logout } from '../controllers/user.controller.js';
+import { userLogin, logout } from '../controllers/user.controller.js';
 
 const router = express.Router();
-
-// Admin login route
-router.post('/admin', adminLogin);
 
 // User login route
 router.post('/user', userLogin);
