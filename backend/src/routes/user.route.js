@@ -1,5 +1,5 @@
 import express from 'express';
-import { adminLogin, userLogin, logout, checkAuth } from '../../controllers/user.controller.js';
+import { adminLogin, userLogin, logout } from '../controllers/user.controller.js';
 
 const router = express.Router();
 
@@ -11,8 +11,5 @@ router.post('/user', userLogin);
 
 // Logout route
 router.post('/logout', logout);
-
-// Auth check route
-router.get('/check', checkAuth);
 
 export default router;
