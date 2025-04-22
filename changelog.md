@@ -9,3 +9,5 @@
 - refactor: moved backend folder to /src
 - Improved order creation logic to handle both MongoDB ObjectIDs and Google Books IDs.
 - cart and checkout pages to ensure accurate price calculations
+- feat: searchbar finally working
+

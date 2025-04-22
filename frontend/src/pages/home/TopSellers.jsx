@@ -24,6 +24,41 @@ export const TopSellers = () => {
     
     const categories = ["Choose a genre", "Business", "Fiction", "Horror", "Adventure", "Biography", "Science", "Romance"];
     
+    // Apply custom navigation styles
+    useEffect(() => {
+        const style = document.createElement('style');
+        style.textContent = `
+            .mySwiper .swiper-button-prev,
+            .mySwiper .swiper-button-next {
+                background-color: rgba(0, 0, 0, 0.5);
+                color: #fff;
+                width: 40px !important;
+                height: 40px !important;
+                border-radius: 50%;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
+            
+            .mySwiper .swiper-button-prev {
+                left: 10px;
+            }
+            
+            .mySwiper .swiper-button-next {
+                right: 10px;
+            }
+            
+            .mySwiper .swiper-button-prev:after,
+            .mySwiper .swiper-button-next:after {
+                font-size: 18px !important;
+            }
+        `;
+        document.head.appendChild(style);
+        
+        return () => {
+            document.head.removeChild(style);
+        };
+    }, []);
 
     useEffect(() => {
         dispatch(fetchTrendingBooks(25));
@@ -36,7 +71,11 @@ export const TopSellers = () => {
         if (category === "Choose a genre") {
             dispatch(fetchTrendingBooks(25));
         } else {
-            dispatch(fetchBooksByCategory({ category, maxResults: 25 }));
+          // If category is null or empty, use Science as the default
+          if(category == null || category === ""){
+            category = 'Science';
+          }
+          dispatch(fetchBooksByCategory({ category, maxResults: 25 }));
         }
     };
     
@@ -75,9 +114,8 @@ export const TopSellers = () => {
                 </div>
             ) : (
                 <Swiper
-                    slidesPerView={1}
-                    spaceBetween={30}
-                    navigation={true}
+                    slidesPerView={2}
+                      navigation={true}
                     breakpoints={{
                         640: {
                             slidesPerView: 1,

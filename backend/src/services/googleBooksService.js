@@ -81,7 +81,7 @@ const googleBooksService = {
   },
   
 
-  getTrendingBooks: async (maxResults = 10) => {
+  getTrendingBooks: async (maxResults = 25) => {
     try {
       // Using bestseller subject to find trending books
       return await googleBooksService.searchBooks({
@@ -97,7 +97,7 @@ const googleBooksService = {
   },
 
 
-  getNewReleases: async (maxResults = 10) => {
+  getNewReleases: async (maxResults = 25) => {
     try {
       const currentYear = new Date().getFullYear();
       return await googleBooksService.searchBooks({
@@ -112,7 +112,7 @@ const googleBooksService = {
   },
 
   
-  getBooksByAuthor: async (author, maxResults = 10) => {
+  getBooksByAuthor: async (author, maxResults = 25) => {
     try {
       return await googleBooksService.searchBooks({
         query: `inauthor:${author}`,
