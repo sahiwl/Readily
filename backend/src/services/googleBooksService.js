@@ -83,7 +83,7 @@ const googleBooksService = {
 
   getTrendingBooks: async (maxResults = 25) => {
     try {
-      // Using bestseller subject to find trending books
+
       return await googleBooksService.searchBooks({
         query: '',
         category: 'bestseller',

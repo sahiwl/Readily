@@ -2,8 +2,8 @@ import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import { FiShoppingCart } from 'react-icons/fi';
 import { useParams, Link } from 'react-router-dom';
-import { addToCart } from '../../redux/features/cart/cartSlice';
-import { fetchBookById, fetchSimilarBooks, clearCurrentBook } from '../../redux/features/googleBooks/googleBooksSlice';
+import { addToCart } from '../../redux/features/cart/cartSlice.js';
+import { fetchBookById, fetchSimilarBooks, clearCurrentBook } from '../../redux/features/googleBooks/googleBooksSlice.js';
 
 export const SingleBook = () => {
     const { id } = useParams();

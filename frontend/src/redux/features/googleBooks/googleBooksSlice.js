@@ -84,7 +84,6 @@ export const fetchRecommendedBooks = createAsyncThunk(
   'googleBooks/fetchRecommended',
   async ({ preferences = [], recentlyViewed = [], maxResults = 25 }, { rejectWithValue }) => {
     try {
-      // Ensure preferences and recentlyViewed are properly handled as arrays
       const prefsArray = Array.isArray(preferences) ? preferences : [preferences].filter(Boolean);
       const recentArray = Array.isArray(recentlyViewed) ? recentlyViewed : [recentlyViewed].filter(Boolean);
       
@@ -98,17 +97,14 @@ export const fetchRecommendedBooks = createAsyncThunk(
         maxResults 
       });
       
-      // Make the API request
       const response = await axios.get(
         `${API_URL}/api/books/google-books/recommended?preferences=${prefsParam}&recentlyViewed=${recentParam}&maxResults=${maxResults}`
       );
       
-      // Log success
       console.log('Recommended books fetched successfully:', response.data);
       return response.data.books;
     } catch (error) {
       console.error('Error fetching recommended books:', error);
-      // Provide more detailed error information
       return rejectWithValue(
         error.response?.data?.error || 
         `Failed to fetch recommended books: ${error.message}`

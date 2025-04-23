@@ -1,7 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit'
 import Swal from 'sweetalert2';
 
-// Helper function to load cart items from localStorage with user-specific carts
+// Helper function to load cart items from localStorage with user-specific carts (temporarily)
 const loadCartItems = () => {
   try {
     // Get the current user from localStorage
@@ -24,7 +24,7 @@ const loadCartItems = () => {
   return [];
 };
 
-// Helper function to save cart items to localStorage with user-specific carts
+// Helper function to save cart items to localStorage with user-specific carts (temporarily)
 const saveCartItems = (cartItems) => {
   try {
     // Get the current user from localStorage

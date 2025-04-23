@@ -12,7 +12,7 @@ import {
 
 const router = express.Router();
 
-// Google Books API endpoints
+
 router.get('/google-books', getGoogleBooks);
 router.get('/google-books/trending', getTrendingBooks);
 router.get('/google-books/new-releases', getNewReleases);

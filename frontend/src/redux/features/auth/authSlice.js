@@ -1,6 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
 
-// Helper function to load initial state from localStorage
+// Helper function to load initial state from localStorage (temporarily)
 const loadUserFromStorage = () => {
   try {
     const token = localStorage.getItem('token');

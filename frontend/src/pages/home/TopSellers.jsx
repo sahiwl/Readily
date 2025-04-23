@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { BookCard } from '../books/BookCard';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { useDispatch, useSelector } from 'react-redux';
@@ -10,7 +10,7 @@ import 'swiper/css/navigation';
 
 // import required modules
 import { Navigation, Pagination } from 'swiper/modules';
-import { fetchTrendingBooks, fetchBooksByCategory, setCurrentCategory } from '../../redux/features/googleBooks/googleBooksSlice';
+import { fetchTrendingBooks, fetchBooksByCategory, setCurrentCategory } from '../../redux/features/googleBooks/googleBooksSlice.js';
 
 export const TopSellers = () => {
     const dispatch = useDispatch();
@@ -24,54 +24,16 @@ export const TopSellers = () => {
     
     const categories = ["Choose a genre", "Business", "Fiction", "Horror", "Adventure", "Biography", "Science", "Romance"];
     
-    // Apply custom navigation styles
-    useEffect(() => {
-        const style = document.createElement('style');
-        style.textContent = `
-            .mySwiper .swiper-button-prev,
-            .mySwiper .swiper-button-next {
-                background-color: rgba(0, 0, 0, 0.5);
-                color: #fff;
-                width: 40px !important;
-                height: 40px !important;
-                border-radius: 50%;
-                display: flex;
-                align-items: center;
-                justify-content: center;
-            }
-            
-            .mySwiper .swiper-button-prev {
-                left: 10px;
-            }
-            
-            .mySwiper .swiper-button-next {
-                right: 10px;
-            }
-            
-            .mySwiper .swiper-button-prev:after,
-            .mySwiper .swiper-button-next:after {
-                font-size: 18px !important;
-            }
-        `;
-        document.head.appendChild(style);
-        
-        return () => {
-            document.head.removeChild(style);
-        };
-    }, []);
-
     useEffect(() => {
         dispatch(fetchTrendingBooks(25));
     }, [dispatch]);
     
-
     const handleCategoryChange = (category) => {
         dispatch(setCurrentCategory(category));
         
         if (category === "Choose a genre") {
             dispatch(fetchTrendingBooks(25));
         } else {
-          // If category is null or empty, use Science as the default
           if(category == null || category === ""){
             category = 'Science';
           }
@@ -79,7 +41,6 @@ export const TopSellers = () => {
         }
     };
     
-
     const displayBooks = currentCategory === "Choose a genre" 
         ? trendingBooks 
         : categoryBooks;
@@ -114,8 +75,9 @@ export const TopSellers = () => {
                 </div>
             ) : (
                 <Swiper
-                    slidesPerView={2}
-                      navigation={true}
+                    slidesPerView={1}
+                    spaceBetween={30}
+                    navigation={true}
                     breakpoints={{
                         640: {
                             slidesPerView: 1,

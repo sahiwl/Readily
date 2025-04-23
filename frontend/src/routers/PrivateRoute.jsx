@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { useSelector } from 'react-redux'
 import { Navigate } from 'react-router-dom'
 import { useAuthStore } from '../redux/features/auth/useAuthStore'
@@ -8,7 +8,7 @@ export const PrivateRoute = ({children}) => {
   const { checkAuth } = useAuthStore();
   
   // Verify token isn't expired
-  React.useEffect(() => {
+  useEffect(() => {
     checkAuth();
   }, []);
   

@@ -8,9 +8,9 @@ import {
   setAuthenticated,
   logout,
   checkAuth
-} from './authStore';
-import { loadUserCart } from '../cart/cartSlice';
-import { auth } from '../../../firebase/firebase.config';
+} from './authStore.js';
+import { loadUserCart } from '../cart/cartSlice.js';
+import { auth } from '../../../firebase/firebase.config.js';
 import { 
   createUserWithEmailAndPassword, 
   signInWithEmailAndPassword, 
@@ -20,10 +20,10 @@ import {
   onAuthStateChanged
 } from 'firebase/auth';
 import axios from 'axios';
-import { getBaseUrl } from '../../../utils/baseURL';
+import { getBaseUrl } from '../../../utils/baseURL.js';
 import { useEffect } from 'react';
 
-// Google provider for Firebase auth
+
 const googleProvider = new GoogleAuthProvider();
 
 // Configure axios defaults for cookies

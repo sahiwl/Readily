@@ -1,9 +1,8 @@
 import { createSlice } from '@reduxjs/toolkit';
 import axios from 'axios';
-import { getBaseUrl } from '../../../utils/baseURL';
+import { getBaseUrl } from '../../../utils/baseURL.js';
 
-// We don't need to access the token directly since it's in HTTP-only cookies
-// We only need to store the user information and authentication state
+// We don't need to access the token directly since it's in HTTP-only cookies. We only need to store the user information and authentication state
 const loadUser = () => {
   try {
     const userStr = localStorage.getItem('user');
@@ -79,7 +78,6 @@ export const authSlice = createSlice({
       localStorage.removeItem('user');
     },
     checkAuth: (state) => {
-      // Make a request to a protected endpoint to verify if the cookie is still valid
       state.loading = true;
       axios.get(`${getBaseUrl()}/api/auth/check`, { 
         withCredentials: true 
@@ -106,7 +104,7 @@ export const authSlice = createSlice({
   },
 });
 
-// Export actions
+
 export const { 
   setUser, 
   setAuthInfo, 
@@ -115,10 +113,10 @@ export const {
   checkAuth
 } = authSlice.actions;
 
-// Export selectors
+
 export const selectUser = (state) => state.auth.user;
 export const selectIsAuthenticated = (state) => state.auth.isAuthenticated;
 export const selectLoading = (state) => state.auth.loading;
 
-// Export reducer
+
 export default authSlice.reducer;

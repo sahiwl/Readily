@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 import { clearCart } from '../../redux/features/cart/cartSlice.js'
-import { useCreateOrderMutation } from '../../redux/features/orders/ordersApi'
+import { useCreateOrderMutation } from '../../redux/features/orders/ordersApi.js'
 
 export const CheckoutPage = () => {
     const cartItems = useSelector(state => state.cart.cartItems)
@@ -23,10 +23,10 @@ export const CheckoutPage = () => {
             return parseFloat(item.price);
         }
         // Default price if none found
-        return 19.99; // Set a reasonable default price
+        return 19.99; 
     };
     
-    // Calculate total price properly
+
     const calculateTotalPrice = () => {
         let total = 0;
         cartItems.forEach(item => {
@@ -49,7 +49,7 @@ export const CheckoutPage = () => {
         coverImage: item.coverImage || item.image
     }));
     
-    // Debug log - remove in production
+    // Debug log (remove in production)
     useEffect(() => {
         console.log("Cart items with prices:", cartItems.map(item => ({
             title: item.title,
@@ -80,7 +80,7 @@ export const CheckoutPage = () => {
             return;
         }
         
-        // Validate phone number is numeric
+
         const phoneNumber = parseFloat(phone);
         if (isNaN(phoneNumber)) {
             alert("Please enter a valid phone number");
@@ -94,7 +94,7 @@ export const CheckoutPage = () => {
                 email,
                 phone: phoneNumber,
                 address,
-                items: orderItems, // Send complete item details
+                items: orderItems, 
                 totalPrice: parseFloat(totalPrice)
             }
             

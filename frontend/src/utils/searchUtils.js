@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { searchBooks } from '../redux/features/googleBooks/googleBooksSlice';
+import { searchBooks } from '../redux/features/googleBooks/googleBooksSlice.js';
 
 /**
  * Custom hook to handle book search functionality

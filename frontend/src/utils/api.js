@@ -1,10 +1,10 @@
 import axios from 'axios';
-import { getBaseUrl } from './baseURL';
+import { getBaseUrl } from './baseURL.js';
 
-// Create a pre-configured axios instance for API requests
+//pre-configured axios instance for api reqs
 const api = axios.create({
   baseURL: getBaseUrl(),
-  withCredentials: true, // Important: enables sending cookies with requests
+  withCredentials: true, //sends cookies with reqs
   headers: {
     'Content-Type': 'application/json'
   }

@@ -1,9 +1,9 @@
 import React from 'react'
 import { FiShoppingCart } from "react-icons/fi";
-import {getImgURL} from '../../utils/getImgURL';
+import {getImgURL} from '../../utils/getImgURL.js';
 import { Link } from 'react-router-dom';
 import {useDispatch} from 'react-redux';
-import { addToCart } from '../../redux/features/cart/cartSlice';
+import { addToCart } from '../../redux/features/cart/cartSlice.js';
 
 export const BookCard = ({book}) => {
   const dispatch = useDispatch();

@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { FaGoogle } from "react-icons/fa";
 import {useForm} from 'react-hook-form';
-import { useAuthStore } from '../redux/features/auth/useAuthStore';
+import { useAuthStore } from '../redux/features/auth/useAuthStore.js';
 
 export const Login = () => {
     const[message, setMessage] = useState("");

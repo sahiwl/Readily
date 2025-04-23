@@ -1,5 +1,5 @@
 import React from 'react'
-import { useGetOrderByEmailQuery } from '../../redux/features/orders/ordersApi'
+import { useGetOrderByEmailQuery } from '../../redux/features/orders/ordersApi.js'
 import { useSelector } from 'react-redux';
 
 export const OrderPage = () => {

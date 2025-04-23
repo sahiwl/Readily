@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { FaGoogle } from "react-icons/fa";
 import {useForm} from 'react-hook-form';
-import { useAuthStore } from '../redux/features/auth/useAuthStore';
+import { useAuthStore } from '../redux/features/auth/useAuthStore.js';
 
 export const Register = () => {
     const [message, setMessage] = useState("");
@@ -11,7 +11,7 @@ export const Register = () => {
     const { register, handleSubmit, watch, formState: { errors } } = useForm();
     const navigate = useNavigate();
 
-    //register user
+
     const onSubmit = async (data) => {
         setLoading(true);
         try {
@@ -86,7 +86,7 @@ export const Register = () => {
                         {loading ? 'Signing in...' : 'Sign in with Google'}
                     </button>
                </div>
-               <p className='mt-5 text-center text-gray-500 text-xs'>&copy;2024 Book Store. All rights reserved</p>
+               <p className='mt-5 text-center text-gray-500 text-xs'>&copy;2024 Readily. All rights reserved</p>
     </div>
 </div>  )
 }

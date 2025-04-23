@@ -7,11 +7,10 @@ import { HiOutlineShoppingCart } from "react-icons/hi";
 import avatar from "../assets/avatar.png"
 import { useState, useEffect, useRef } from "react";
 import { useSelector } from 'react-redux';
-import { useAuthStore } from "../redux/features/auth/useAuthStore";
-import { useBookSearch } from "../utils/searchUtils";
+import { useAuthStore } from "../redux/features/auth/useAuthStore.js";
+import { useBookSearch } from "../utils/searchUtils.js";
 
 const navigation = [
-    // { name: "Dashboard", href: "/dashboard" },
     { name: "Orders", href: "/orders" },
     { name: "Cart page", href: "/cart" },
     { name: "Checkout page", href: "/checkout" }
@@ -217,9 +216,9 @@ export const Navbar = () => {
                             </div>
                         )}
                     </div>
-                    <button className="hidden sm:block">
+                    {/* <button className="hidden sm:block">
                         <HiOutlineHeart className="size-6" />
-                    </button>
+                    </button> */}
 
                     <Link to="/cart" className="bg-primary p-1 sm:px-6 px-2 flex items-center rounded-sm">
                         <HiOutlineShoppingCart className="size-6" />

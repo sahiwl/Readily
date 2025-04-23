@@ -1,8 +1,8 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 import { useDispatch, useSelector } from "react-redux"
-import { getImgURL } from '../../utils/getImgURL';
-import { clearCart, removeFromCart } from '../../redux/features/cart/cartSlice';
+import { getImgURL } from '../../utils/getImgURL.js';
+import { clearCart, removeFromCart } from '../../redux/features/cart/cartSlice.js';
 
 export const CartPage = () => {
     const cartItems = useSelector(state => state.cart.cartItems);
