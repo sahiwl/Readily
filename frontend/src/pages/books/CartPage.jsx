@@ -1,14 +1,18 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 import { useDispatch, useSelector } from "react-redux"
-import { getImgURL } from '../../utils/getImgURL';
-import { clearCart, removeFromCart } from '../../redux/features/cart/cartSlice';
+import { getImgURL } from '../../utils/getImgURL.js';
+import { clearCart, removeFromCart } from '../../redux/features/cart/cartSlice.js';
 
 export const CartPage = () => {
     const cartItems = useSelector(state => state.cart.cartItems);
     const dispatch = useDispatch();
-    const totalPrice = cartItems.reduce((acc, item)=> acc + item.newPrice, 0).toFixed(2);
+    
 
+    const totalPrice = cartItems.reduce((acc, item) => {
+        const price = parseFloat(item.newPrice) || 0;
+        return acc + price;
+    }, 0).toFixed(2);
 
     const handleRemoveFromCart = (product)=>{
         dispatch(removeFromCart(product))

@@ -1,14 +1,24 @@
-import React from 'react'
-import { useAuth } from '../context/AuthContext'
-import {Navigate} from 'react-router-dom'
+import React, { useEffect } from 'react'
+import { useSelector } from 'react-redux'
+import { Navigate } from 'react-router-dom'
+import { useAuthStore } from '../redux/features/auth/useAuthStore'
 
 export const PrivateRoute = ({children}) => {
-  const {currentUser, loading} = useAuth()
-  if(currentUser){
+  const { isAuthenticated, loading } = useSelector(state => state.auth);
+  const { checkAuth } = useAuthStore();
+  
+  // Verify token isn't expired
+  useEffect(() => {
+    checkAuth();
+  }, []);
+  
+  if (isAuthenticated) {
     return children;
   }
-  if(loading){
+  
+  if (loading) {
     return <h1>Loading......</h1>
   }
-    return <Navigate to="/login" replace/>
+  
+  return <Navigate to="/login" replace/>
 }

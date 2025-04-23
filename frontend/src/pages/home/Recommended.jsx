@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect } from 'react'
 import { Swiper, SwiperSlide } from 'swiper/react';
-
+import { useDispatch, useSelector } from 'react-redux';
 
 // Import Swiper styles
 import 'swiper/css';
@@ -9,65 +9,88 @@ import 'swiper/css/navigation';
 
 // import required modules
 import { Navigation, Pagination } from 'swiper/modules';
-import { BookCard } from '../books/BookCard';
-import { useFetchAllBooksQuery } from '../../redux/features/books/booksApi';
+import { BookCard } from '../books/BookCard.jsx';
+import { fetchRecommendedBooks } from '../../redux/features/googleBooks/googleBooksSlice.js';
 
 export const Recommended = () => {
-    // const [books, setBooks] = useState([]);
+    const dispatch = useDispatch();
+    const { 
+        recommendedBooks, 
+        loading, 
+        error 
+    } = useSelector((state) => state.googleBooks);
+    
+    // Get only recently viewed books from localStorage
+    const getRecentlyViewed = () => {
+        try {
+            return JSON.parse(localStorage.getItem('recentlyViewed')) || [];
+        } catch (error) {
+            console.error("Error getting recently viewed books:", error);
+            return [];
+        }
+    };
+    
+    // Fetch recommended books on component mount
+    useEffect(() => {
+        const recentlyViewed = getRecentlyViewed();
 
-    const {data: books= []} = useFetchAllBooksQuery();
-    console.log(books)
+        dispatch(fetchRecommendedBooks({ recentlyViewed, maxResults: 25 }));
+    }, [dispatch]);
 
-
-    // useEffect(() => {
-    //     fetch("books.json").then(res => res.json()).then((data) => setBooks(data))
-    // }, []);
     return (
         <>
             <div className="py-16">
-
                 <h2 className='text-2xl font-semibold mb-6'>Recommended for you</h2>
-                <Swiper
-                    slidesPerView={1}
-                    spaceBetween={30}
-                    navigation={true}
-                    // pagination={{
-                    //   clickable: true,
-                    // }}
-                    breakpoints={{
-                        640: {
-                            slidesPerView: 1,
-                            spaceBetween: 20,
-                        },
-                        768: {
-                            slidesPerView: 2,
-                            spaceBetween: 40,
-                        },
-                        1024: {
-                            slidesPerView: 2,
-                            spaceBetween: 50,
-                        },
-                        1180: {
-                            slidesPerView: 3,
-                            spaceBetween: 50,
-                        }
-                    }}
-                    modules={[Pagination, Navigation]}
-                    className="mySwiper"
-                >
-
-                    {books.length > 0 && books.slice(8, 18).map((book, index) => (
-
-                            <SwiperSlide key={index}>
-                                <BookCard book={book} />
+                
+                {loading ? (
+                    <div className="flex justify-center items-center h-64">
+                        <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-blue-500"></div>
+                    </div>
+                ) : error ? (
+                    <div className="flex justify-center items-center h-64">
+                        <p className="text-red-500">{error}</p>
+                    </div>
+                ) : (
+                    <Swiper
+                        slidesPerView={1}
+                        spaceBetween={30}
+                        navigation={true}
+                        breakpoints={{
+                            640: {
+                                slidesPerView: 1,
+                                spaceBetween: 20,
+                            },
+                            768: {
+                                slidesPerView: 2,
+                                spaceBetween: 40,
+                            },
+                            1024: {
+                                slidesPerView: 2,
+                                spaceBetween: 50,
+                            },
+                            1180: {
+                                slidesPerView: 3,
+                                spaceBetween: 50,
+                            }
+                        }}
+                        modules={[Pagination, Navigation]}
+                        className="mySwiper"
+                    >
+                        {recommendedBooks && recommendedBooks.length > 0 ? (
+                            recommendedBooks.map((book, index) => (
+                                <SwiperSlide key={book._id || index}>
+                                    <BookCard book={book} />
+                                </SwiperSlide>
+                            ))
+                        ) : (
+                            <SwiperSlide>
+                                <div className="flex justify-center items-center h-64">
+                                    <p>No recommended books found.</p>
+                                </div>
                             </SwiperSlide>
-
-                    ))
-                    }
-
-
-
-                </Swiper>
+                        )}
+                    </Swiper>
+                )}
             </div>
         </>
     )
