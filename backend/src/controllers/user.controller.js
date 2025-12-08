@@ -68,3 +68,55 @@ export const logout = async (req, res) => {
         return res.status(500).json({ message: "Failed to logout" });
     }
 };
+
+// Check authentication status
+export const checkAuth = async (req, res) => {
+    try {
+        const token = req.cookies.auth_token;
+        
+        if (!token) {
+            return res.status(200).json({ 
+                authenticated: false,
+                user: null 
+            });
+        }
+
+        try {
+            const decoded = jwt.verify(token, JWT_SECRET);
+            const user = await User.findById(decoded.id).select('username role');
+            
+            if (!user) {
+                return res.status(200).json({ 
+                    authenticated: false,
+                    user: null 
+                });
+            }
+
+            return res.status(200).json({
+                authenticated: true,
+                user: {
+                    username: user.username,
+                    role: user.role
+                }
+            });
+        } catch (jwtError) {
+            // Token is invalid or expired
+            res.clearCookie('auth_token', {
+                httpOnly: true,
+                secure: NODE_ENV === 'production',
+                sameSite: NODE_ENV === 'production' ? 'none' : 'lax',
+                path: '/'
+            });
+            return res.status(200).json({ 
+                authenticated: false,
+                user: null 
+            });
+        }
+    } catch (error) {
+        console.log("Check auth error: ", error);
+        return res.status(200).json({ 
+            authenticated: false,
+            user: null 
+        });
+    }
+};
