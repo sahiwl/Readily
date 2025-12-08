@@ -1,4 +1,4 @@
-ignoredBuiltDependencies:
-  - '@firebase/util'
-  - bcrypt
-  - protobufjs
+# ignoredBuiltDependencies:
+#   - '@firebase/util'
+#   - bcrypt
+#   - protobufjs
