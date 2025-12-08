@@ -1,5 +1,15 @@
 # Updates
 
+## 9 Dec 2025
+- upgraded to tailwind v4
+- did a ui rehaul to a neobrutalistic theme
+- still got ui fixes to do
+
+
+## 8 Dec 2025
+- add checkauth endpoint
+
+
 ## 21 April 2025
 - fix: cart items lost on refresh at cart page
 - using cookies from now on.

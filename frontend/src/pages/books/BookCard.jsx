@@ -51,7 +51,7 @@ export const BookCard = ({book}) => {
         className="brutal-button w-full sm:w-auto group/btn"
       >
         <span className="flex items-center justify-center gap-2">
-          <FiShoppingCart className="group-hover/btn:rotate-12 transition-transform" />
+          <FiShoppingCart className="size-7 md:size-6 group-hover/btn:rotate-12 transition-transform" />
           <span>Add to Cart</span>
         </span>
       </button>

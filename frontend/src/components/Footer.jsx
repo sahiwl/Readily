@@ -59,7 +59,7 @@ export const Footer = () => {
                 {/* Bottom Bar */}
                 <div className="brutal-border-t border-white pt-6 flex flex-col md:flex-row justify-between items-center gap-4">
                     <p className="font-black uppercase text-sm">
-                        &copy; Sahil Kumar Ray 2024 All Rights Reserved
+                        &copy; Sahil Kumar Ray 2025 All Rights Reserved
                     </p>
                   
                 </div>

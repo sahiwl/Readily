@@ -1,6 +1,7 @@
 import React from 'react'
 import banner from '../../assets/banner.png'
 import { HiArrowRight } from 'react-icons/hi2'
+import { Link } from 'react-router-dom';
 
 export const Banner = () => {
   return (
@@ -34,17 +35,12 @@ export const Banner = () => {
           
           <div className='flex flex-wrap gap-4'>
             <button className='brutal-button group'>
-              <span className='flex items-center gap-2'>
-                Subscribe Now
-                <HiArrowRight className='group-hover:translate-x-1 transition-transform' />
-              </span>
+              <Link to={"/register"}className='flex items-center gap-2'>
+                Join Now
+                <HiArrowRight className=' size-5 group-hover:translate-x-1 transition-transform' />
+              </Link>
             </button>
-            <button className='brutal-button-secondary group'>
-              <span className='flex items-center gap-2'>
-                Browse Books
-                <HiArrowRight className='group-hover:translate-x-1 transition-transform' />
-              </span>
-            </button>
+  
           </div>
         </div>
 

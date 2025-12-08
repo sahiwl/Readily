@@ -23,7 +23,6 @@ const Home = () => {
 
         <section className='py-16 md:py-24 relative'>
           <div className='absolute top-0 left-0 w-full h-2 bg-black'></div>
-          <News/>
         </section>
     </div>
   )
