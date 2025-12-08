@@ -12,35 +12,48 @@ export const BookCard = ({book}) => {
     dispatch(addToCart(product))
   }
   return (
-<div className=" rounded-lg transition-shadow duration-300">
-  <div
-    className="flex flex-col sm:flex-row sm:items-center sm:h-72  sm:justify-center gap-4"
-  >
-    <div className="sm:h-72 sm:flex-shrink-0 border rounded-md">
-      <Link to="/">
+<div className="brutal-card bg-white group">
+  <div className="flex flex-col sm:flex-row sm:items-start gap-6">
+    {/* Book Cover */}
+    <div className="sm:w-48 sm:flex-shrink-0 brutal-border bg-white p-2 brutal-shadow-sm group-hover:shadow-none group-hover:translate-x-1 group-hover:translate-y-1 transition-all">
+      <Link to={`/books/${book._id}`}>
         <img
           src={`${getImgURL(book.coverImage)}`}
-          alt=""
-          className="w-full bg-cover p-2 rounded-md cursor-pointer hover:scale-105 transition-all duration-200"
+          alt={book.title}
+          className="w-full h-auto object-cover"
         />
       </Link>
     </div>
-    <div>
+    
 
+    <div className="flex-1 space-y-4">
       <Link to={`/books/${book._id}`}>
-      <h3 className="text-xl font-semibold hover:text-blue-600 mb-3">
+        <h3 className="text-2xl font-black uppercase tracking-tight text-black group-hover:text-accent transition-colors">
           {book.title}
         </h3>
-        </Link>
-      <p className="text-gray-600 mb-5">{book.description.length > 80 ? `${book.description.slice(0,80)}...` : book.description}</p>
-      <p className="font-medium mb-5">
-        {book?.newPrice}<span className="line-through font-normal ml-2">{book?.oldPrice}</span>
+      </Link>
+      
+      <p className="text-gray-800 font-bold leading-relaxed">
+        {book.description.length > 120 ? `${book.description.slice(0,120)}...` : book.description}
       </p>
+      
+      <div className="flex items-baseline gap-3">
+        <span className="text-3xl font-black text-accent">
+          ${book?.newPrice}
+        </span>
+        <span className="text-lg font-bold text-gray-500 line-through">
+          ${book?.oldPrice}
+        </span>
+      </div>
+      
       <button 
-      onClick={()=> handleAddToCart(book)}
-      className="btn-primary px-6 space-x-1 flex items-center gap-1 ">
-        <FiShoppingCart className="" />
-        <span>Add to Cart</span>
+        onClick={()=> handleAddToCart(book)}
+        className="brutal-button w-full sm:w-auto group/btn"
+      >
+        <span className="flex items-center justify-center gap-2">
+          <FiShoppingCart className="group-hover/btn:rotate-12 transition-transform" />
+          <span>Add to Cart</span>
+        </span>
       </button>
     </div>
   </div>

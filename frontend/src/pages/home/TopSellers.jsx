@@ -47,22 +47,27 @@ export const TopSellers = () => {
 
     return (
         <div className='py-10'>
-            <h2 className='text-3xl font-semibold mb-6'>Top Sellers</h2>
-            {/* {category filtering} */}
-            <div className="mb-8 flex items-center">
-                <select 
-                    name="category" 
-                    id="category" 
-                    value={currentCategory}
-                    onChange={(e) => handleCategoryChange(e.target.value)}
-                    className='border bg-[#EAEAEA] border-gray-300 focus:outline-none rounded-md px-4 py-2'
-                >
-                    {categories.map((category, index) => (
-                        <option key={index} value={category}>
-                            {category}
-                        </option>
-                    ))}
-                </select>
+            <div className='mb-8 flex flex-col md:flex-row md:items-center md:justify-between gap-4'>
+                <h2 className='text-4xl md:text-5xl font-black uppercase tracking-tight'>
+                    <span className='text-black'>Top</span>{' '}
+                    <span className='text-accent'>Sellers</span>
+                </h2>
+     
+                <div className="flex items-center">
+                    <select 
+                        name="category" 
+                        id="category" 
+                        value={currentCategory}
+                        onChange={(e) => handleCategoryChange(e.target.value)}
+                        className='brutal-input bg-white font-bold uppercase text-sm cursor-pointer'
+                    >
+                        {categories.map((category, index) => (
+                            <option key={index} value={category}>
+                                {category}
+                            </option>
+                        ))}
+                    </select>
+                </div>
             </div>
 
             {loading ? (

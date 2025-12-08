@@ -5,13 +5,12 @@ import { comparePassword } from '../middleware/passwordUtils.js';
 const JWT_SECRET = process.env.JWT_SECRET_KEY;
 const NODE_ENV = process.env.NODE_ENV || 'development';
 
-// Configure cookie options based on environment
 const getCookieOptions = () => {
     return {
-        httpOnly: true,
-        secure: NODE_ENV === 'production', // Only use secure in production
-        sameSite: NODE_ENV === 'production' ? 'none' : 'lax', // Allow cross-site cookies in production
-        maxAge: 3600000, // 1 hour in milliseconds
+        httpOnly: process.env.httpOnly,
+        secure: process.env.secure, // true in prod
+        sameSite: process.env.sameSite, // Allow cross-site cookies in prod
+        maxAge: process.env.maxAge, 
         path: '/'
     };
 };

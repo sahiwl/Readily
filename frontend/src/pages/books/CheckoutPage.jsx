@@ -118,125 +118,133 @@ export const CheckoutPage = () => {
         setAddress(prev => ({ ...prev, [name]: value }))
     }
 
-    if (cartItems.length === 0) return <div className='text-center text-2xl'>Your cart is empty</div>
+    if (cartItems.length === 0) {
+        return (
+            <div className='brutal-card text-center py-12'>
+                <p className='text-3xl font-black uppercase text-gray-600'>Your cart is empty</p>
+            </div>
+        );
+    }
 
     return (
-        <div className="p-4">
-            <h2 className="text-2xl font-bold mb-4">Checkout</h2>
+        <div className="py-8">
+            <h1 className="text-4xl md:text-5xl font-black uppercase tracking-tight mb-8">
+                <span className="text-black">Check</span>{' '}
+                <span className="text-accent">Out</span>
+            </h1>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                <div>
-                    <h3 className="text-xl font-semibold mb-4">Shipping Information</h3>
+                <div className="brutal-card">
+                    <h3 className="text-2xl font-black uppercase mb-6">Shipping Information</h3>
                     <form onSubmit={handleSubmit} className="space-y-4">
                         <div>
-                            <label className="block text-sm font-medium">Name</label>
+                            <label className="block text-sm font-black uppercase mb-2">Name</label>
                             <input
                                 type="text"
                                 value={name}
                                 onChange={(e) => setName(e.target.value)}
                                 required
-                                className="w-full px-3 py-2 border border-gray-300 rounded-md"
+                                className="brutal-input w-full"
                             />
                         </div>
                         <div>
-                            <label className="block text-sm font-medium">Email</label>
+                            <label className="block text-sm font-black uppercase mb-2">Email</label>
                             <input
                                 type="email"
                                 value={email}
                                 onChange={(e) => setEmail(e.target.value)}
                                 required
-                                className="w-full px-3 py-2 border border-gray-300 rounded-md"
+                                className="brutal-input w-full"
                             />
                         </div>
                         <div>
-                            <label className="block text-sm font-medium">Phone</label>
+                            <label className="block text-sm font-black uppercase mb-2">Phone</label>
                             <input
                                 type="tel"
                                 value={phone}
                                 onChange={(e) => setPhone(e.target.value)}
                                 required
-                                className="w-full px-3 py-2 border border-gray-300 rounded-md"
+                                className="brutal-input w-full"
                             />
                         </div>
                         <div>
-                            <label className="block text-sm font-medium">City</label>
+                            <label className="block text-sm font-black uppercase mb-2">City</label>
                             <input
                                 type="text"
                                 name="city"
                                 value={address.city}
                                 onChange={handleInputChange}
                                 required
-                                className="w-full px-3 py-2 border border-gray-300 rounded-md"
+                                className="brutal-input w-full"
                             />
                         </div>
                         <div>
-                            <label className="block text-sm font-medium">State</label>
+                            <label className="block text-sm font-black uppercase mb-2">State</label>
                             <input
                                 type="text"
                                 name="state"
                                 value={address.state}
                                 onChange={handleInputChange}
                                 required
-                                className="w-full px-3 py-2 border border-gray-300 rounded-md"
+                                className="brutal-input w-full"
                             />
                         </div>
                         <div>
-                            <label className="block text-sm font-medium">Country</label>
+                            <label className="block text-sm font-black uppercase mb-2">Country</label>
                             <input
                                 type="text"
                                 name="country"
                                 value={address.country}
                                 onChange={handleInputChange}
                                 required
-                                className="w-full px-3 py-2 border border-gray-300 rounded-md"
+                                className="brutal-input w-full"
                             />
                         </div>
                         <div>
-                            <label className="block text-sm font-medium">ZIP Code</label>
+                            <label className="block text-sm font-black uppercase mb-2">ZIP Code</label>
                             <input
                                 type="text"
                                 name="zipcode"
                                 value={address.zipcode}
                                 onChange={handleInputChange}
                                 required
-                                className="w-full px-3 py-2 border border-gray-300 rounded-md"
+                                className="brutal-input w-full"
                             />
                         </div>
                         <button
                             type="submit"
                             disabled={isLoading}
-                            className="w-full bg-blue-600 text-white py-2 px-4 rounded-md hover:bg-blue-700 disabled:bg-blue-300"
+                            className="brutal-button w-full disabled:opacity-50 disabled:cursor-not-allowed"
                         >
                             {isLoading ? "Processing..." : "Place Order"}
                         </button>
-                        {isError && <p className="text-red-500">{error?.data?.message || "Something went wrong"}</p>}
+                        {isError && <p className="text-accent font-black uppercase">{error?.data?.message || "Something went wrong"}</p>}
                     </form>
                 </div>
-                <div>
-                    <h3 className="text-xl font-semibold mb-4">Order Summary</h3>
-                    <div className="bg-gray-50 p-4 rounded-md">
-                        <div className="max-h-96 overflow-y-auto mb-4">
+                <div className="brutal-card bg-lime/10">
+                    <h3 className="text-2xl font-black uppercase mb-6">Order Summary</h3>
+                    <div className="brutal-card bg-white mb-4">
+                        <div className="max-h-96 overflow-y-auto space-y-3">
                             {cartItems.map(item => {
-                                // Use the fixed price calculation function
                                 const price = calculateItemPrice(item);
                                 const quantity = parseInt(item.quantity) || 1;
                                 return (
-                                    <div key={item._id} className="flex justify-between items-center border-b py-2">
-                                        <div className="flex items-center">
-                                            <img src={item?.image} alt={item.title} className="h-12 w-10 object-cover mr-2" />
+                                    <div key={item._id} className="flex justify-between items-center brutal-border-b border-black pb-3 last:border-b-0">
+                                        <div className="flex items-center gap-3">
+                                            <img src={item?.coverImage || item?.image} alt={item.title} className="h-16 w-12 object-cover brutal-border border-black" />
                                             <div>
-                                                <p className="font-medium">{item.title}</p>
-                                                <p className="text-sm text-gray-600">${price.toFixed(2)} x {quantity}</p>
+                                                <p className="font-black uppercase text-sm">{item.title}</p>
+                                                <p className="text-xs font-bold text-gray-600">${price.toFixed(2)} x {quantity}</p>
                                             </div>
                                         </div>
-                                        <p className="font-medium">${(price * quantity).toFixed(2)}</p>
+                                        <p className="font-black text-lg text-accent">${(price * quantity).toFixed(2)}</p>
                                     </div>
                                 );
                             })}
                         </div>
-                        <div className="border-t pt-2">
-                            <div className="flex justify-between font-bold text-lg">
-                                <p>Total</p>
-                                <p>${totalPrice.toFixed(2)}</p>
+                        <div className="brutal-border-t border-black pt-4 mt-4">
+                            <div className="flex justify-between items-center">
+                                <p className="text-xl font-black uppercase">Total</p>
+                                <p className="text-3xl font-black text-accent">${totalPrice.toFixed(2)}</p>
                             </div>
                         </div>
                     </div>

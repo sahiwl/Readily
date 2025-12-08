@@ -1,14 +1,12 @@
 import React from "react";
-import { Link, useNavigate } from "react-router-dom";
-import { IoSearchOutline } from "react-icons/io5";
+import { Link } from "react-router-dom";
 import { HiOutlineUser } from "react-icons/hi2";
-import { HiOutlineHeart } from "react-icons/hi2";
 import { HiOutlineShoppingCart } from "react-icons/hi";
 import avatar from "../assets/avatar.png"
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect } from "react";
 import { useSelector } from 'react-redux';
 import { useAuthStore } from "../redux/features/auth/useAuthStore.js";
-import { useBookSearch } from "../utils/searchUtils.js";
+import { SearchBar } from "./SearchBar.jsx";
 
 const navigation = [
     { name: "Orders", href: "/orders" },
@@ -18,33 +16,9 @@ const navigation = [
 
 export const Navbar = () => {
     const [isDropdownOpen, setIsDropdownOpen] = useState(false);
-    const searchInputRef = useRef(null);
-    const searchResultsRef = useRef(null);
-    const navigate = useNavigate();
-    
-
-    const {
-        searchQuery,
-        showSearchResults,
-        setShowSearchResults,
-        searchResults,
-        loading,
-        handleSearchInputChange,
-        handleSearchSubmit: baseHandleSearchSubmit,
-        handleSearchResultClick: baseHandleSearchResultClick
-    } = useBookSearch(30);
-    
-
-    const handleSearchSubmit = (e) => baseHandleSearchSubmit(e, navigate);
-    const handleSearchResultClick = (bookId) => baseHandleSearchResultClick(bookId, navigate);
-    
     const cartItems = useSelector(state => state.cart.cartItems || []);
-    
-
     const isAuthenticated = useSelector(state => state.auth.isAuthenticated);
     const user = useSelector(state => state.auth.user);
-    
-
     const { logoutUser } = useAuthStore();
 
     // Close dropdown when clicking outside
@@ -53,21 +27,13 @@ export const Navbar = () => {
             if (isDropdownOpen && !event.target.closest('.user-menu')) {
                 setIsDropdownOpen(false);
             }
-            
-            // Close search results when clicking outside
-            if (showSearchResults && 
-                searchResultsRef.current && 
-                !searchResultsRef.current.contains(event.target) && 
-                !searchInputRef.current.contains(event.target)) {
-                setShowSearchResults(false);
-            }
         }
         
         document.addEventListener('mousedown', handleClickOutside);
         return () => {
             document.removeEventListener('mousedown', handleClickOutside);
         };
-    }, [isDropdownOpen, showSearchResults]);
+    }, [isDropdownOpen]);
 
     const handleLogOut = async () => {
         try {
@@ -79,87 +45,17 @@ export const Navbar = () => {
     }
 
     return (
-        <header className="max-w-screen-2xl mx-auto px-4 py-6 sticky top-0 bg-white z-20 shadow-sm">
-            <nav className="flex justify-between sticky items-center">
+        <header className="w-full max-w-[1920px] mx-auto px-4 md:px-6 lg:px-8 xl:px-12 2xl:px-16 py-4 sticky top-0 bg-white z-20 brutal-border-b-4 border-black">
+            <nav className="flex justify-between items-center">
                 {/* {left side} */}
-                <div className="flex items-center md:gap-16 gap-4">
-                    <h1 className="font-Cinzel text-4xl text-gray-600">
-                        <Link to="/">Readily</Link>
-                    </h1>
+                <div className="flex items-center md:gap-8 gap-4">
+                    <Link to="/">
+                        <h1 className="font-black text-3xl md:text-4xl uppercase tracking-tight text-black hover:text-accent transition-colors">
+                            Readily
+                        </h1>
+                    </Link>
                     
-                    {/* {search input with dropdown} */}
-                    <div className="relative sm:w-72 w-40">
-                        <form onSubmit={handleSearchSubmit}>
-                            <div className="relative">
-                                <IoSearchOutline className="absolute inline-block left-3 top-2.5 text-gray-500" />
-                                <input
-                                    ref={searchInputRef}
-                                    type="text"
-                                    placeholder="Search books..."
-                                    value={searchQuery}
-                                    onChange={handleSearchInputChange}
-                                    onFocus={() => searchQuery.trim().length > 2 && setShowSearchResults(true)}
-                                    className="bg-[#EAEAEA] w-full py-2 md:px-10 px-8 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-300"
-                                />
-                            </div>
-                        </form>
-                        
-                        {/* Search Results Dropdown */}
-                        {showSearchResults && (
-                            <div 
-                                ref={searchResultsRef}
-                                className="absolute mt-1 w-full bg-white rounded-md shadow-lg z-30 border border-gray-200 max-h-[70vh] overflow-y-auto"
-                            >
-                                {loading ? (
-                                    <div className="p-4 text-center text-gray-500">
-                                        <div className="inline-block animate-spin rounded-full h-4 w-4 border-t-2 border-b-2 border-blue-500 mr-2"></div>
-                                        Searching...
-                                    </div>
-                                ) : searchResults && searchResults.length > 0 ? (
-                                    <div>
-                                        <div className="max-h-[50vh] overflow-y-auto p-2">
-                                            {searchResults.map((book) => (
-                                                <div 
-                                                    key={book._id} 
-                                                    className="flex items-center p-2 hover:bg-gray-100 cursor-pointer rounded-md"
-                                                    onClick={() => handleSearchResultClick(book._id)}
-                                                >
-                                                    <img 
-                                                        src={book.coverImage || book.image} 
-                                                        alt={book.title} 
-                                                        className="h-14 w-10 object-cover mr-3 rounded-sm shadow-sm"
-                                                    />
-                                                    <div className="flex-1 min-w-0">
-                                                        <p className="text-sm font-medium text-gray-900 truncate">
-                                                            {book.title}
-                                                        </p>
-                                                        <p className="text-xs text-gray-500 truncate">
-                                                            {book.author || (book.authors && book.authors[0])}
-                                                        </p>
-                                                    </div>
-                                                </div>
-                                            ))}
-                                        </div>
-                                        {searchResults.length > 5 && (
-                                            <div 
-                                                className="border-t p-3 text-center text-sm text-blue-600 hover:bg-gray-50 cursor-pointer sticky bottom-0 bg-white"
-                                                onClick={() => {
-                                                    navigate(`/search?q=${encodeURIComponent(searchQuery.trim())}`);
-                                                    setShowSearchResults(false);
-                                                }}
-                                            >
-                                                See all results
-                                            </div>
-                                        )}
-                                    </div>
-                                ) : searchQuery.trim().length > 2 ? (
-                                    <div className="p-4 text-center text-gray-500">
-                                        No results found for "{searchQuery}"
-                                    </div>
-                                ) : null}
-                            </div>
-                        )}
-                    </div>
+                    <SearchBar />
                 </div>
 
                 {/* {right side} */}
@@ -169,26 +65,27 @@ export const Navbar = () => {
                             <> 
                                 <button 
                                     onClick={() => setIsDropdownOpen(!isDropdownOpen)}
-                                    className="flex items-center focus:outline-none">
+                                    className="flex items-center focus:outline-none brutal-border bg-white px-3 py-2 brutal-shadow-sm hover:shadow-none hover:translate-x-1 hover:translate-y-1 transition-all"
+                                >
                                     <img 
                                         src={user?.photo || avatar} 
                                         alt="User" 
-                                        className="size-7 rounded-full ring-2 ring-blue-500" 
+                                        className="size-8 brutal-border border-black" 
                                     />
-                                    <span className="hidden md:inline ml-2 text-sm font-medium">
+                                    <span className="hidden md:inline ml-2 text-sm font-black uppercase">
                                         {user?.username || "User"}
                                     </span>
                                 </button>
                                 
                                 {isDropdownOpen && (
-                                    <div className="absolute right-0 mt-2 w-48 bg-white shadow-lg rounded-md z-40 border border-gray-200">
+                                    <div className="absolute right-0 mt-2 w-48 bg-white brutal-border brutal-shadow z-40">
                                         <ul>
-                                            <li className="px-4 py-2 border-b">
-                                                <span className="font-semibold text-sm">{user?.username || "User"}</span>
+                                            <li className="px-4 py-3 brutal-border-b border-black bg-primary">
+                                                <span className="font-black uppercase text-sm text-black">{user?.username || "User"}</span>
                                             </li>
                                             {navigation.map((item) => (
                                                 <li key={item.name} onClick={() => { setIsDropdownOpen(false) }}>
-                                                    <Link to={item.href} className="block px-4 py-2 text-sm hover:bg-gray-100">
+                                                    <Link to={item.href} className="block px-4 py-2 text-sm font-bold uppercase hover:bg-lime transition-colors brutal-border-b border-black last:border-b-0">
                                                         {item.name}
                                                     </Link>
                                                 </li>
@@ -196,7 +93,7 @@ export const Navbar = () => {
                                             <li>
                                                 <button 
                                                     onClick={handleLogOut}
-                                                    className="block w-full text-left px-4 py-2 text-sm hover:bg-gray-100">
+                                                    className="block w-full text-left px-4 py-2 text-sm font-black uppercase hover:bg-accent hover:text-white transition-colors">
                                                     Logout
                                                 </button>
                                             </li>
@@ -206,25 +103,31 @@ export const Navbar = () => {
                             </> 
                         ) : (
                             <div className="flex space-x-2">
-                                <Link to="/login" className="flex items-center space-x-1 hover:text-blue-600">
-                                    <HiOutlineUser className="size-6" />
-                                    <span className="hidden sm:inline text-sm">Login</span>
+                                <Link to="/login" className="brutal-button-secondary text-sm">
+                                    <span className="flex items-center gap-1">
+                                        <HiOutlineUser className="size-5" />
+                                        <span className="hidden sm:inline">Login</span>
+                                    </span>
                                 </Link>
-                                <Link to="/register" className="hidden sm:flex items-center space-x-1 hover:text-blue-600">
-                                    <span className="text-sm">Register</span>
+                                <Link to="/register" className="hidden sm:block brutal-button text-sm">
+                                    Register
                                 </Link>
                             </div>
                         )}
                     </div>
-                    {/* <button className="hidden sm:block">
-                        <HiOutlineHeart className="size-6" />
-                    </button> */}
 
-                    <Link to="/cart" className="bg-primary p-1 sm:px-6 px-2 flex items-center rounded-sm">
-                        <HiOutlineShoppingCart className="size-6" />
-                        <span className="text-sm font-semibold sm:ml-1">
-                            {cartItems.length > 0 ? cartItems.length : 0}
+                    <Link to="/cart" className="brutal-button relative group">
+                        <span className="flex items-center gap-2">
+                            <HiOutlineShoppingCart className="size-6" />
+                            <span className="font-black">
+                                {cartItems.length > 0 ? cartItems.length : 0}
+                            </span>
                         </span>
+                        {cartItems.length > 0 && (
+                            <span className="absolute -top-2 -right-2 w-5 h-5 bg-accent brutal-border border-black text-white text-xs font-black flex items-center justify-center">
+                                {cartItems.length}
+                            </span>
+                        )}
                     </Link>
                 </div>
             </nav>

@@ -40,7 +40,10 @@ export const Recommended = () => {
     return (
         <>
             <div className="py-16">
-                <h2 className='text-2xl font-semibold mb-6'>Recommended for you</h2>
+                <h2 className='text-4xl md:text-5xl font-black uppercase tracking-tight mb-8'>
+                    <span className='text-black'>Recommended</span>{' '}
+                    <span className='text-purple'>For You</span>
+                </h2>
                 
                 {loading ? (
                     <div className="flex justify-center items-center h-64">
