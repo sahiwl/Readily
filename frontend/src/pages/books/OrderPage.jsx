@@ -86,7 +86,9 @@ export const OrderPage = () => {
                                     </div>
                                     <div>
                                         <p className="font-black uppercase mb-1">Total Price:</p>
-                                        <p className="text-2xl font-black text-accent">${order.totalPrice}</p>
+                                        <p className="text-2xl font-black text-accent">
+                                            ₹{(order.totalPriceInr ?? order.totalPrice ?? 0).toLocaleString('en-IN')}
+                                        </p>
                                     </div>
                                 </div>
                                 
@@ -111,7 +113,7 @@ export const OrderPage = () => {
                                                     <div className="flex-1">
                                                         <p className="font-black uppercase text-sm">{item.title}</p>
                                                         <p className="text-xs font-bold text-gray-600">
-                                                            {item.quantity || 1} x ${item.price || 'N/A'}
+                                                            {item.quantity || 1} x ₹{(item.priceInr ?? item.price ?? 0).toLocaleString('en-IN')}
                                                         </p>
                                                     </div>
                                                 </div>

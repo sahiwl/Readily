@@ -4,7 +4,7 @@ import { getImgURL } from '../../utils/getImgURL.js';
 import { Link } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { addToCart } from '../../redux/features/cart/cartSlice.js';
-import { dollarsToRupees } from '../../utils/currency.js';
+import { formatRupees } from '../../utils/currency.js';
 
 export const BookCard = ({book}) => {
   const dispatch = useDispatch();
@@ -29,7 +29,7 @@ export const BookCard = ({book}) => {
 
     <div className="flex-1 space-y-3 min-w-0">
       <Link to={`/books/${book._id}`}>
-        <h3 className="text-xl md:text-2xl font-black uppercase tracking-tight text-black group-hover:text-accent transition-colors break-words line-clamp-2">
+        <h3 className="text-xl md:text-2xl font-black uppercase tracking-tight text-black group-hover:text-accent transition-colors wrap-break-word line-clamp-2">
           {book.title}
         </h3>
       </Link>
@@ -40,13 +40,10 @@ export const BookCard = ({book}) => {
       
       <div className="flex flex-wrap items-baseline gap-2 md:gap-3">
         <span className="text-2xl md:text-3xl font-black text-accent">
-          ₹{book?.newPrice ? dollarsToRupees(book.newPrice).toLocaleString('en-IN') : '—'}
+          ₹{formatRupees(book?.newPriceInr ?? book?.newPrice)}
         </span>
         <span className="text-base md:text-lg font-bold text-gray-500 line-through">
-          {book?.oldPrice ? `₹${dollarsToRupees(book.oldPrice).toLocaleString('en-IN')}` : ''}
-        </span>
-        <span className="text-xs md:text-sm font-bold text-gray-700">
-          {book?.newPrice ? `$${book.newPrice}` : '$—'}
+          {book?.oldPriceInr || book?.oldPrice ? `₹${formatRupees(book?.oldPriceInr ?? book?.oldPrice)}` : ''}
         </span>
       </div>
       

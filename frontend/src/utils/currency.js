@@ -9,3 +9,9 @@ export function dollarsToRupees(amount, rate = 83) {
   return Math.round(numeric * rate);
 }
 
+export function formatRupees(amount) {
+  return typeof amount === 'number'
+    ? amount.toLocaleString('en-IN')
+    : '—';
+}
+

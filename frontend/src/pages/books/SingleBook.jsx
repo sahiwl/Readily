@@ -4,7 +4,7 @@ import { FiShoppingCart } from 'react-icons/fi';
 import { useParams, Link } from 'react-router-dom';
 import { addToCart } from '../../redux/features/cart/cartSlice.js';
 import { fetchBookById, fetchSimilarBooks, clearCurrentBook } from '../../redux/features/googleBooks/googleBooksSlice.js';
-import { dollarsToRupees } from '../../utils/currency.js';
+import { formatRupees } from '../../utils/currency.js';
 
 export const SingleBook = () => {
     const { id } = useParams();
@@ -113,14 +113,11 @@ export const SingleBook = () => {
                     
                     <div className="brutal-card bg-lime/10 p-4 space-y-1">
                         <p className="text-4xl font-black text-accent mb-1">
-                            ₹{dollarsToRupees(book.newPrice || '14.99').toLocaleString('en-IN')}
+                            ₹{formatRupees(book?.newPriceInr ?? book?.newPrice)}
                         </p>
-                        <p className="text-sm font-bold text-gray-700">
-                            ${book.newPrice || '14.99'}
-                        </p>
-                        {book.oldPrice && (
+                        {(book.oldPriceInr ?? book.oldPrice) && (
                             <p className="text-xl font-bold text-gray-500 line-through">
-                                ₹{dollarsToRupees(book.oldPrice).toLocaleString('en-IN')}
+                                ₹{formatRupees(book?.oldPriceInr ?? book?.oldPrice)}
                             </p>
                         )}
                     </div>
@@ -177,7 +174,9 @@ export const SingleBook = () => {
                                         <p className="text-xs font-bold text-gray-600 truncate mb-2">
                                             {similarBook.author || (similarBook.authors && similarBook.authors[0])}
                                         </p>
-                                        <p className="text-lg font-black text-accent">${similarBook.newPrice}</p>
+                                        <p className="text-lg font-black text-accent">
+                                            ₹{formatRupees(similarBook.newPriceInr ?? similarBook.newPrice)}
+                                        </p>
                                     </div>
                                 </div>
                             </Link>

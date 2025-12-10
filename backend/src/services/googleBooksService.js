@@ -4,8 +4,7 @@ dotenv.config();
 
 
 const GOOGLE_BOOKS_API_KEY = process.env.GOOGLE_BOOKS_API_KEY;
-
-const GOOGLE_BOOKS_API_URL = process.env.GOOGLE_BOOKS_API_URL 
+const GOOGLE_BOOKS_API_URL = process.env.GOOGLE_BOOKS_API_URL || 'https://www.googleapis.com/books/v1';
 
 const googleBooksService = {
   /**
@@ -173,9 +172,9 @@ const googleBooksService = {
     const { volumeInfo } = googleBook;
     const imageLinks = volumeInfo.imageLinks || {};
     
-    // Generate random price between $10 and $40
-    const newPrice = (Math.random() * 30 + 10).toFixed(2);
-    const oldPrice = (parseFloat(newPrice) * (1 + Math.random() * 0.5)).toFixed(2);
+    // Generate random price directly in INR (no USD conversions)
+    const newPriceInr = Math.floor(Math.random() * 1800) + 300; // ₹300 - ₹2100
+    const oldPriceInr = Math.round(newPriceInr * (1 + Math.random() * 0.4)); // up to 40% higher
 
     // Extract ISBN numbers if available
     let isbn10 = '', isbn13 = '';
@@ -207,8 +206,12 @@ const googleBooksService = {
       ratingsCount: volumeInfo.ratingsCount || 0,
       isbn10: isbn10,
       isbn13: isbn13,
-      oldPrice: oldPrice,
-      newPrice: newPrice,
+      // Prices provided directly in INR
+      newPriceInr,
+      oldPriceInr,
+      // Keep USD fields null to avoid frontend using them accidentally
+      newPrice: null,
+      oldPrice: null,
       trending: false,
       createdAt: new Date().toISOString()
     };
@@ -222,10 +225,7 @@ const googleBooksService = {
     if (!googleBooksResponse.items || !Array.isArray(googleBooksResponse.items)) {
       return [];
     }
-    
-    return googleBooksResponse.items.map(item => 
-      googleBooksService.formatGoogleBookData(item)
-    );
+    return googleBooksResponse.items.map(item => googleBooksService.formatGoogleBookData(item));
   },
 
   
@@ -379,13 +379,7 @@ const googleBooksService = {
    * Adapt Google Books API response to match our app's format
    * @param {Object} response - Google Books API response
    */
-  adaptGoogleBooksData: (response) => {
-    if (!response || !response.items) {
-      return [];
-    }
-    
-    return response.items.map(item => googleBooksService.formatGoogleBookData(item));
-  }
+  // Keep single adapt function only (above)
 };
 
 export default googleBooksService;

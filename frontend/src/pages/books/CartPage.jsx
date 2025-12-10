@@ -9,10 +9,10 @@ export const CartPage = () => {
     const dispatch = useDispatch();
     
 
-    const totalPrice = cartItems.reduce((acc, item) => {
-        const price = parseFloat(item.newPrice) || 0;
+    const totalPriceInr = cartItems.reduce((acc, item) => {
+        const price = parseFloat(item.newPriceInr ?? item.newPrice) || 0;
         return acc + price;
-    }, 0).toFixed(2);
+    }, 0);
 
     const handleRemoveFromCart = (product)=>{
         dispatch(removeFromCart(product))
@@ -65,7 +65,9 @@ export const CartPage = () => {
                                                                     {product?.title}
                                                                 </h3>
                                                             </Link>
-                                                            <p className="text-2xl font-black text-accent ml-4">${product?.newPrice}</p>
+                                                            <p className="text-2xl font-black text-accent ml-4">
+                                                                ₹{(product?.newPriceInr ?? product?.newPrice ?? 0).toLocaleString('en-IN')}
+                                                            </p>
                                                         </div>
                                                         <p className="text-sm font-bold text-gray-700 uppercase mb-2">
                                                             Category: {product?.category}
@@ -103,7 +105,7 @@ export const CartPage = () => {
                     <div className="brutal-card bg-white mb-6">
                         <div className="flex justify-between items-center mb-4">
                             <p className="text-xl font-black uppercase">Subtotal</p>
-                            <p className="text-3xl font-black text-accent">${totalPrice ? totalPrice : 0}</p>
+                            <p className="text-3xl font-black text-accent">₹{totalPriceInr.toLocaleString('en-IN')}</p>
                         </div>
                         <p className="text-sm font-bold text-gray-600">Shipping and taxes calculated at checkout.</p>
                     </div>
