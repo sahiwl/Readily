@@ -4,6 +4,7 @@ import { FiShoppingCart } from 'react-icons/fi';
 import { useParams, Link } from 'react-router-dom';
 import { addToCart } from '../../redux/features/cart/cartSlice.js';
 import { fetchBookById, fetchSimilarBooks, clearCurrentBook } from '../../redux/features/googleBooks/googleBooksSlice.js';
+import { dollarsToRupees } from '../../utils/currency.js';
 
 export const SingleBook = () => {
     const { id } = useParams();
@@ -58,11 +59,11 @@ export const SingleBook = () => {
         <div className="max-w-6xl mx-auto py-8">
             <div className="grid md:grid-cols-2 gap-8 mb-10">
                 <div className="flex justify-center">
-                    <div className="brutal-card bg-white p-4">
+                    <div className="brutal-card bg-white p-4 w-full max-w-xs sm:max-w-sm">
                         <img
                             src={book.coverImage || book.image}
                             alt={book.title}
-                            className="max-h-96 object-contain"
+                            className="w-full h-auto max-h-112 object-contain"
                         />
                     </div>
                 </div>
@@ -110,10 +111,17 @@ export const SingleBook = () => {
                         )}
                     </div>
                     
-                    <div className="brutal-card bg-lime/10 p-4">
-                        <p className="text-4xl font-black text-accent mb-2">${book.newPrice || '14.99'}</p>
+                    <div className="brutal-card bg-lime/10 p-4 space-y-1">
+                        <p className="text-4xl font-black text-accent mb-1">
+                            ₹{dollarsToRupees(book.newPrice || '14.99').toLocaleString('en-IN')}
+                        </p>
+                        <p className="text-sm font-bold text-gray-700">
+                            ${book.newPrice || '14.99'}
+                        </p>
                         {book.oldPrice && (
-                            <p className="text-xl font-bold text-gray-500 line-through">${book.oldPrice}</p>
+                            <p className="text-xl font-bold text-gray-500 line-through">
+                                ₹{dollarsToRupees(book.oldPrice).toLocaleString('en-IN')}
+                            </p>
                         )}
                     </div>
                     

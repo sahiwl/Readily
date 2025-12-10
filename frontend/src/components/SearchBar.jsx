@@ -41,10 +41,10 @@ export const SearchBar = () => {
     }, [showSearchResults, setShowSearchResults]);
 
     return (
-        <div className="relative sm:w-72 w-40">
+        <div className="relative w-full sm:w-64 md:w-72">
             <form onSubmit={handleSearchSubmit}>
                 <div className="relative">
-                    <IoSearchOutline className="absolute inline-block left-3 top-3 text-black" size={20} />
+                    <IoSearchOutline className="absolute left-3 top-1/2 -translate-y-1/2 text-black" size={18} />
                     <input
                         ref={searchInputRef}
                         type="text"
@@ -52,7 +52,7 @@ export const SearchBar = () => {
                         value={searchQuery}
                         onChange={handleSearchInputChange}
                         onFocus={() => searchQuery.trim().length > 2 && setShowSearchResults(true)}
-                        className="brutal-input bg-white w-full py-2.5 md:pl-10 pl-9 pr-4 font-bold uppercase text-sm placeholder:text-gray-400"
+                        className="brutal-input bg-white w-full py-2.5 pl-12 pr-4 font-bold uppercase text-sm placeholder:text-gray-400"
                     />
                 </div>
             </form>
@@ -93,7 +93,7 @@ export const SearchBar = () => {
                                     </div>
                                 ))}
                             </div>
-                            {searchResults.length > 5 && (
+                            {/* {searchResults.length > 5 && (
                                 <div 
                                     className="brutal-border-t border-black p-3 text-center text-sm font-black uppercase text-accent hover:bg-primary cursor-pointer sticky bottom-0 bg-white transition-colors"
                                     onClick={() => {
@@ -103,7 +103,7 @@ export const SearchBar = () => {
                                 >
                                     See All Results
                                 </div>
-                            )}
+                            )} */}
                         </div>
                     ) : searchQuery.trim().length > 2 ? (
                         <div className="p-4 text-center font-bold text-gray-600">

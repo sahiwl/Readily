@@ -56,24 +56,24 @@ export const Recommended = () => {
                 ) : (
                     <Swiper
                         slidesPerView={1}
-                        spaceBetween={30}
+                        spaceBetween={20}
                         navigation={true}
                         breakpoints={{
                             640: {
                                 slidesPerView: 1,
                                 spaceBetween: 20,
                             },
-                            768: {
-                                slidesPerView: 2,
-                                spaceBetween: 40,
-                            },
                             1024: {
-                                slidesPerView: 2,
-                                spaceBetween: 50,
+                                slidesPerView: 1,
+                                spaceBetween: 24,
                             },
-                            1180: {
+                            1280: {
+                                slidesPerView: 2,
+                                spaceBetween: 32,
+                            },
+                            1536: {
                                 slidesPerView: 3,
-                                spaceBetween: 50,
+                                spaceBetween: 40,
                             }
                         }}
                         modules={[Pagination, Navigation]}

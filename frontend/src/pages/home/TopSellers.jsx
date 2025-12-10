@@ -23,6 +23,7 @@ export const TopSellers = () => {
     } = useSelector((state) => state.googleBooks);
     
     const categories = ["Choose a genre", "Business", "Fiction", "Horror", "Adventure", "Biography", "Science", "Romance"];
+    const defaultCategory = "Fiction";
     
     useEffect(() => {
         dispatch(fetchTrendingBooks(25));
@@ -31,18 +32,15 @@ export const TopSellers = () => {
     const handleCategoryChange = (category) => {
         dispatch(setCurrentCategory(category));
         
-        if (category === "Choose a genre") {
-            dispatch(fetchTrendingBooks(25));
-        } else {
-          if(category == null || category === ""){
-            category = 'Science';
-          }
-          dispatch(fetchBooksByCategory({ category, maxResults: 25 }));
+        let finalCategory = category;
+        if (category === "Choose a genre" || !category) {
+            finalCategory = defaultCategory;
         }
+        dispatch(fetchBooksByCategory({ category: finalCategory, maxResults: 25 }));
     };
     
     const displayBooks = currentCategory === "Choose a genre" 
-        ? trendingBooks 
+        ? (categoryBooks.length ? categoryBooks : trendingBooks)
         : categoryBooks;
 
     return (
@@ -81,24 +79,25 @@ export const TopSellers = () => {
             ) : (
                 <Swiper
                     slidesPerView={1}
-                    spaceBetween={30}
+                    spaceBetween={20}
                     navigation={true}
                     breakpoints={{
                         640: {
                             slidesPerView: 1,
                             spaceBetween: 20,
                         },
-                        768: {
-                            slidesPerView: 2,
-                            spaceBetween: 40,
-                        },
+                        // iPad widths (~820px) stay single to avoid overlap
                         1024: {
-                            slidesPerView: 2,
-                            spaceBetween: 50,
+                            slidesPerView: 1,
+                            spaceBetween: 24,
                         },
-                        1180:{
+                        1280:{
+                            slidesPerView: 2,
+                            spaceBetween: 32,
+                        },
+                        1536:{
                             slidesPerView: 3,
-                            spaceBetween: 50,
+                            spaceBetween: 40,
                         }
                     }}
                     modules={[Pagination, Navigation]}

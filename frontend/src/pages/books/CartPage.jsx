@@ -49,7 +49,7 @@ export const CartPage = () => {
                                     {cartItems.map((product) => (
                                         <li key={product?._id} className="brutal-card">
                                             <div className="flex gap-6">
-                                                <div className="h-32 w-24 flex-shrink-0 brutal-border bg-white p-2 brutal-shadow-sm">
+                                                <div className="h-32 w-24 shrink-0 brutal-border bg-white p-2 brutal-shadow-sm">
                                                     <img
                                                         alt={product?.title}
                                                         src={`${getImgURL(product?.coverImage)}`}
